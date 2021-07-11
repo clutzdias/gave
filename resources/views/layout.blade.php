@@ -27,10 +27,20 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(página atual)</span></a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Exposições</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Editais</a><!-- Página estática, sem entidade-->
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Termos de uso</a><!-- Página estática, sem entidade-->
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Fórum</a>
+                </li>
+                <!-- Posicionar a parte de cadastro à direita-->
+                <li class="nav-item">
+                <a class="nav-link" href="#">Entrar</a>
                 </li>
             </ul>
             </div>
