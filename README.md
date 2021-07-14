@@ -12,20 +12,19 @@ Este projeto busca oferecer uma opção virtual de galeria de artes visuais, ace
 
 - Clonar o repositório através do comando: git clone
 
+- Com o PostgreSQL instalado, criar um novo database com o nome gave. 
+
 **Na pasta raíz do projeto:**
 
 Rodar o comando: composer install
 
 Criar uma cópia do arquivo .env.example, dar o nome de .env, e editar as informações do banco de dados conforme trecho abaixo, substituindo o PORT, o USERNAME e PASSWORD conforme a configuração da sua máquina:
 
-- DB_CONNECTION=pgsql
-- DB_HOST=127.0.0.1
-- DB_PORT=3306
-- DB_DATABASE=gave
-- DB_USERNAME=seuusuario
-- DB_PASSWORD=suasenha
+![config_env](https://github.com/clutzdias/gave/blob/master/imagens/config_env.png)
 
 Editar o arquivo database.php, fazendo as substituições de 'port', 'username' e 'password' conforme as configurações da sua máquina:
+
+![config_database](https://github.com/clutzdias/gave/blob/master/imagens/config_database.png)
 
 Após o término da instalação, rodar as migrations: php artisan migrate
 
