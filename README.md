@@ -25,7 +25,9 @@ Criar uma cópia do arquivo .env.example, dar o nome de .env, e editar as inform
 - DB_USERNAME=seuusuario
 - DB_PASSWORD=suasenha
 
-Após o término da instalação, rodar as migrations:
+Editar o arquivo database.php, fazendo as substituições de 'port', 'username' e 'password' conforme as configurações da sua máquina:
+
+Após o término da instalação, rodar as migrations: php artisan migrate
 
 Para subir o servidor, rodar o comando: php artisan serve
 
