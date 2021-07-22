@@ -13,6 +13,8 @@ class CriarTabelaMensagens extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('mensagens');
+        
         Schema::create('mensagens', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('conteudo');

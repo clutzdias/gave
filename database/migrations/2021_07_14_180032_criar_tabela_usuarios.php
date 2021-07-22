@@ -13,6 +13,8 @@ class CriarTabelaUsuarios extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('usuarios');
+        
         Schema::create('usuarios', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('cpf')->unique();

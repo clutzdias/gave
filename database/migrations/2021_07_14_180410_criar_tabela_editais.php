@@ -13,12 +13,13 @@ class CriarTabelaEditais extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('editais');
+
         Schema::create('editais', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('titulo');
             $table->text('descricao');
             $table->text('exigencias');
-            $table->json('selecionadores');
             $table->date('data_inicio');
             $table->date('data_fim');
             $table->boolean('vigente');

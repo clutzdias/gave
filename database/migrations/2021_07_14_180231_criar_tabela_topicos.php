@@ -13,6 +13,8 @@ class CriarTabelaTopicos extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('topicos');
+        
         Schema::create('topicos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('titulo');

@@ -13,6 +13,8 @@ class CriarTabelaFormacoes extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('formacoes');
+
         Schema::create('formacoes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('instituicao');

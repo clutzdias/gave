@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CriarTabelaExposicoes extends Migration
+class CriarTabelaSelecionadoreseditais extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CriarTabelaExposicoes extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('exposicoes');
+        Schema::dropIfExists('selecionadoreseditais');
 
-        Schema::create('exposicoes', function (Blueprint $table) {
+        Schema::create('selecionadoreseditais', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('edital');
-            $table->text('titulo');
-            $table->date('data_inicio');
-            $table->date('data_fim');
-            $table->boolean('exposicao_aberta');
-            $table->uuid('curador');
+            $table->uuid('selecionador');
+            $table->boolean('curador');
             $table->foreign('edital')->references('id')->on('editais');
-            $table->foreign('curador')->references('id')->on('usuarios');
+            $table->foreign('selecionador')->references('id')->on('usuarios');
         });
     }
 
@@ -35,6 +32,6 @@ class CriarTabelaExposicoes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exposicoes');
+        Schema::dropIfExists('selecionadoreseditais');
     }
 }

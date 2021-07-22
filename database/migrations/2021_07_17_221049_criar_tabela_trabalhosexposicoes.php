@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CriarTabelaTrabalhos extends Migration
+class CriarTabelaTrabalhosexposicoes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CriarTabelaTrabalhos extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('trabalhos');
-
-        Schema::create('trabalhos', function (Blueprint $table) {
+        Schema::dropIfExists('trabalhosexposicoes');
+        
+        Schema::create('trabalhosexposicoes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->text('conteudo');
+            $table->uuid('exposicao');
+            $table->uuid('trabalho');
             $table->uuid('artista');
-            $table->string('titulo');
-            $table->string('tecnica');
-            $table->integer('ano');
-            $table->text('resumo');
+            $table->foreign('exposicao')->references('id')->on('exposicoes');
+            $table->foreign('trabalho')->references('id')->on('trabalhos');
             $table->foreign('artista')->references('id')->on('usuarios');
         });
     }
@@ -34,6 +33,6 @@ class CriarTabelaTrabalhos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trabalhos');
+        Schema::dropIfExists('trabalhosexposicoes');
     }
 }
