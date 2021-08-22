@@ -20,7 +20,7 @@ class CriarTabelaUsuarios extends Migration
             $table->string('cpf')->unique();
             $table->string('nome');
             $table->string('email');
-            $table->string('senha');
+            $table->string('password');
             $table->integer('perfil');
             $table->integer('idade');
             $table->string('genero');

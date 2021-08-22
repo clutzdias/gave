@@ -19,7 +19,7 @@ class Usuario extends Model{
         'cpf',
         'nome',
         'email',
-        'senha',
+        'password',
         'perfil',
         'idade',
         'genero',
