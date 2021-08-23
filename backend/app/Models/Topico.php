@@ -13,8 +13,14 @@ class Topico extends Model{
         'usuario_criador'
     ];
 
-    public function mensagens(){
+    public function mensagens()
+    {
         return $this->hasMany(Mensagem::class);
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class);
     }
     
 }
