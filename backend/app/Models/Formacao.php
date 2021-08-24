@@ -15,9 +15,9 @@ class Formacao extends Model{
         'semestres_cursados'
     ];
 
-    public function selecionador(){
+    public function usuario(){
 
-        return $this->belongsTo(Selecionador::class);
+        return $this->belongsTo(Usuario::class);
     }
 
 }

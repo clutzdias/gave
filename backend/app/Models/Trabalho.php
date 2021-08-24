@@ -17,8 +17,8 @@ class Trabalho extends Model{
         'resumo'
     ];
 
-    public function artista()
+    public function usuario()
     {
-        return $this->belongsTo(Artista::class);
+        return $this->belongsTo(Usuario::class);
     }
 }

@@ -21,9 +21,13 @@ Route::group(array('prefix' => 'api'), function()
       return response()->json(['message' => 'Gave API', 'status' => 'Connected']);;
   });
 
-  //Aqui adicionamos os endpoints e os controllers ao qual se referem.
-  Route::resource('usuarios', 'UsuariosController');
-  Route::resource('exposicoes', 'ExposicoesController');
+  Route::get('{id_edital}/exposicoes', 'ExposicoesController@listarExposicoes')->name('exposicoes.listarExposicoes');
+  Route::post('{id_edital}/exposicoes/criar', 'ExposicoesController@criarExposicao')->name('exposicoes.criarExposicao');
+  Route::get('{id_edital}/exposicoes/{id_exposicao}', 'ExposicoesController@showExposicao')->name('exposicoes.showExposicao');
+  Route::get('{id_edital}/trabalhos', 'TrabalhosController@listarTrabalhos')->name('trabalhos.listarTrabalhos');
+  Route::get('{id_edital}/trabalhos/{id_usuario}', 'TrabalhosController@trabalhosPorUsuario')->name('trabalhos.trabalhosPorUsuario');
+  Route::post('{id_edital}/trabalhos', 'TrabalhosController@criarTrabalho')->name('trabalhos.criarTrabalho');
+  
 
 });
 

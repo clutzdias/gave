@@ -6,27 +6,15 @@ use Illuminate\Http\Request;
 
 class ExposicoesController extends Controller
 {
-    //Listagem da entidade
-    public function index()
-    {
-        
-    }
-
-    //Retorna um único registro, através do parâmetro ID
-    public function show($id)
-    {
+    public function listarExposicoes() {
 
     }
 
-    //Salva um registro
-    public function store(Request $request)
-    {
+    public function criarExposicao(Request $request) {
 
     }
 
-    //Atualiza um registro
-    public function update(Request $request, $id)
-    {
+    public function showExposicao(){
 
     }
 }

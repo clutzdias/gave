@@ -37,6 +37,11 @@ class Usuario extends Model{
         return $this->hasMany(Topico::class);
     }
 
+    public function formacao()
+    {
+        return $this->hasOne(Formacao::class);
+    }
+
 }
 
 
