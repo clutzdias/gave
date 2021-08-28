@@ -32,6 +32,6 @@ class CriarTabelaPerfilusuarioedital extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('perfilusuarioedital');
     }
 }

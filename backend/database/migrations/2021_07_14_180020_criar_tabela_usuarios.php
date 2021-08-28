@@ -21,13 +21,9 @@ class CriarTabelaUsuarios extends Migration
             $table->string('nome');
             $table->string('email');
             $table->string('password');
-            $table->integer('perfil');
-            $table->integer('idade');
             $table->string('genero');
             $table->string('cidade');
             $table->string('estado');
-            $table->uuid('formacao');
-            $table->foreign('formacao')->references('id')->on('formacoes');
         });
         //
     }

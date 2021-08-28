@@ -23,7 +23,9 @@ class CriarTabelaTrabalhos extends Migration
             $table->string('tecnica');
             $table->integer('ano');
             $table->text('resumo');
+            $table->uuid('edital');
             $table->foreign('artista')->references('id')->on('usuarios');
+            $table->foreign('edital')->references('id')->on('editais');
         });
     }
 

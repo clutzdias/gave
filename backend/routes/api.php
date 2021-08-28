@@ -14,19 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(array('prefix' => 'api'), function()
+Route::group(array('prefix' => 'v1'), function()
 {
 
   Route::get('/', function () {
       return response()->json(['message' => 'Gave API', 'status' => 'Connected']);;
   });
 
-  Route::get('{id_edital}/exposicoes', 'ExposicoesController@listarExposicoes')->name('exposicoes.listarExposicoes');
-  Route::post('{id_edital}/exposicoes/criar', 'ExposicoesController@criarExposicao')->name('exposicoes.criarExposicao');
-  Route::get('{id_edital}/exposicoes/{id_exposicao}', 'ExposicoesController@showExposicao')->name('exposicoes.showExposicao');
-  Route::get('{id_edital}/trabalhos', 'TrabalhosController@listarTrabalhos')->name('trabalhos.listarTrabalhos');
-  Route::get('{id_edital}/trabalhos/{id_usuario}', 'TrabalhosController@trabalhosPorUsuario')->name('trabalhos.trabalhosPorUsuario');
-  Route::post('{id_edital}/trabalhos', 'TrabalhosController@criarTrabalho')->name('trabalhos.criarTrabalho');
+  Route::get('{id_edital}/exposicoes', 'App\Http\Controllers\ExposicoesController@listarExposicoes')->name('exposicoes.listarExposicoes');
+  Route::post('{id_edital}/exposicoes/criar', 'App\Http\Controllers\ExposicoesController@criarExposicao')->name('exposicoes.criarExposicao');
+  Route::get('{id_edital}/exposicoes/{id_exposicao}', 'App\Http\Controllers\ExposicoesController@showExposicao')->name('exposicoes.showExposicao');
+  Route::get('{id_edital}/trabalhos', 'App\Http\Controllers\TrabalhosController@listarTrabalhos')->name('trabalhos.listarTrabalhos');
+  Route::get('{id_edital}/trabalhos/{id_usuario}', 'App\Http\Controllers\TrabalhosController@trabalhosPorUsuario')->name('trabalhos.trabalhosPorUsuario');
+  Route::post('/trabalhos/criar', 'App\Http\Controllers\TrabalhosController@criarTrabalho')->name('trabalhos.criarTrabalho');
   
 
 });
@@ -35,6 +35,6 @@ Route::get('/', function () {
     return redirect('api');
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+}); */

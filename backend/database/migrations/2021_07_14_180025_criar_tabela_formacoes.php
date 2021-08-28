@@ -17,10 +17,12 @@ class CriarTabelaFormacoes extends Migration
 
         Schema::create('formacoes', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('usuario');
             $table->string('instituicao');
             $table->string('curso');
             $table->string('situacao');
             $table->integer('semestres_cursados');
+            $table->foreign('usuario')->references('id')->on('usuarios');
         });
     }
 

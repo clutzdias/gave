@@ -42,6 +42,11 @@ class Usuario extends Model{
         return $this->hasOne(Formacao::class);
     }
 
+    public function trabalhos()
+    {
+        return $this->hasMany(Trabalho::class);
+    }
+
 }
 
 
