@@ -27,6 +27,7 @@ Route::group(array('prefix' => 'v1'), function()
   Route::get('{id_edital}/trabalhos', 'App\Http\Controllers\TrabalhosController@listarTrabalhos')->name('trabalhos.listarTrabalhos');
   Route::get('{id_edital}/trabalhos/{id_usuario}', 'App\Http\Controllers\TrabalhosController@trabalhosPorUsuario')->name('trabalhos.trabalhosPorUsuario');
   Route::post('/trabalhos/criar', 'App\Http\Controllers\TrabalhosController@criarTrabalho')->name('trabalhos.criarTrabalho');
+  Route::patch('/trabalhos/{id_trabalho}', 'App\Http\Controllers\TrabalhosController@atualizarTrabalho')->name('trabalhos.atualizarTrabalho');
   
 
 });

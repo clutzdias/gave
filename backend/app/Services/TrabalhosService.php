@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Trabalho;
 use App\Classes\Util;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class TrabalhosService {
@@ -27,7 +28,6 @@ class TrabalhosService {
 
     public function criarTrabalho($data)
     {
-        //var_dump($data);
         $validator = $this->trabalhoValidator($data);
 
         if($validator->fails()){
@@ -47,4 +47,58 @@ class TrabalhosService {
             ];
         }
     }
+
+    public function getTrabalhosPorEdital($id_edital, $id_usuario = '')
+    {
+        $query = DB::table('trabalhos')
+                        ->join('usuarios', 'trabalhos.artista', '=', 'usuarios.id')
+                        ->select('trabalhos.id',
+                                'trabalhos.conteudo',
+                                'trabalhos.titulo',
+                                'trabalhos.tecnica',
+                                'trabalhos.ano',
+                                'trabalhos.resumo', 
+                                'usuarios.nome')
+                        ->where('trabalhos.edital', '=', $id_edital);
+        
+        if($id_usuario != ''){
+            $query->where('trabalhos.artista', '=', $id_usuario);
+        }     
+        
+        return $query->get();
+
+    }
+
+    public function atualizarTrabalho($data, $id_trabalho){
+
+        $trabalho = Trabalho::find($id_trabalho);
+
+        if(!$trabalho){
+            return [
+                'success' => 0,
+                'message' => 'Trabalho nao encontrado'
+            ];
+        }
+        
+        $validator = $this->trabalhoValidator($data);
+
+        if($validator->fails()){
+            return [
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ];
+        } else {
+
+            $trabalho->fill($data);
+            $trabalho->save();
+
+            return [
+                'success' => 1,
+                'message' => 'Trabalho atualizado com sucesso'
+            ];
+        
+        }
+
+    }
+
 }
