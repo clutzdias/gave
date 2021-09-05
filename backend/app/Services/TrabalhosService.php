@@ -26,7 +26,7 @@ class TrabalhosService {
         return $validator;
     }
 
-    public function criarTrabalho($data)
+    public function criarTrabalho($data, $path)
     {
         $validator = $this->trabalhoValidator($data);
 
@@ -38,6 +38,7 @@ class TrabalhosService {
         } else {
             $trabalho = new Trabalho();
             $trabalho->id = Util::newGuid();
+            $trabalho->conteudo = $path;
             $trabalho->fill($data);
             $trabalho->save();
 
@@ -69,7 +70,7 @@ class TrabalhosService {
 
     }
 
-    public function atualizarTrabalho($data, $id_trabalho){
+    public function atualizarTrabalho($data, $id_trabalho, $path){
 
         $trabalho = Trabalho::find($id_trabalho);
 
@@ -90,6 +91,11 @@ class TrabalhosService {
         } else {
 
             $trabalho->fill($data);
+
+            if ($path != ''){
+                $trabalho->conteudo = $path;
+            }
+
             $trabalho->save();
 
             return [
@@ -97,6 +103,33 @@ class TrabalhosService {
                 'message' => 'Trabalho atualizado com sucesso'
             ];
         
+        }
+
+    }
+
+    public function excluirTrabalho($id_usuario, $id_trabalho){
+
+        $trabalho = Trabalho::find($id_trabalho);
+
+        if (!$trabalho){
+            return [
+                'success' => 0,
+                'message' => 'Trabalho nao encontrado'
+            ];
+        } else {
+            if ($trabalho->artista != $id_usuario){
+                return [
+                    'success' => 0,
+                    'message' => 'Este trabalho nao pertence ao usuario informado'
+                ];
+            } else {
+                $trabalho->delete();
+                return [
+                    'success' => 1,
+                    'message' => 'Trabalho excluído com sucesso'
+                ];
+            }
+
         }
 
     }
