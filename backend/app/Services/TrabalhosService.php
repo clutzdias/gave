@@ -80,30 +80,21 @@ class TrabalhosService {
                 'message' => 'Trabalho nao encontrado'
             ];
         }
-        
-        $validator = $this->trabalhoValidator($data);
 
-        if($validator->fails()){
-            return [
-                'success' => 0,
-                'message' => $validator->errors()->first()
-            ];
-        } else {
+        $trabalho->fill($data);
 
-            $trabalho->fill($data);
-
-            if ($path != ''){
-                $trabalho->conteudo = $path;
-            }
-
-            $trabalho->save();
-
-            return [
-                'success' => 1,
-                'message' => 'Trabalho atualizado com sucesso'
-            ];
-        
+        if ($path != ''){
+            $trabalho->conteudo = $path;
         }
+
+        $trabalho->save();
+
+        return [
+            'success' => 1,
+            'message' => 'Trabalho atualizado com sucesso'
+        ];
+        
+        
 
     }
 

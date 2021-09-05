@@ -107,6 +107,9 @@ class TrabalhosController extends Controller
             $upload = request()->image->storeAs('trabalhos', $nameFile);
 
             $path = asset($upload);
+
+        } else if (request()->hasFile('image') && !(request()->file('image')->isValid())){
+            return new JsonResponse('O arquivo informado nao eh valido', 400);
         }
 
         try{
