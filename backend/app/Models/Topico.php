@@ -9,8 +9,10 @@ class Topico extends Model{
     public $timestamps = false;
     protected $fillable = [
         'id',
+        'titulo',
         'data_criacao',
         'usuario_criador'
+    
     ];
 
     public function mensagens()
