@@ -30,8 +30,11 @@ Route::group(array('prefix' => 'v1'), function()
   Route::post('/trabalhos/criar', 'App\Http\Controllers\TrabalhosController@criarTrabalho')->name('trabalhos.criarTrabalho');
   Route::patch('/trabalhos/{id_trabalho}', 'App\Http\Controllers\TrabalhosController@atualizarTrabalho')->name('trabalhos.atualizarTrabalho');
   Route::delete('/trabalhos/{id_usuario}/excluir/{id_trabalho}', 'App\Http\Controllers\TrabalhosController@excluirTrabalho')->name('trabalhos.excluirTrabalho');
+  Route::get('/topicos', 'App\Http\Controllers\TopicosController@listarTopicos')->name('topicos.listarTopicos');
+  Route::post('{id_usuario}/topicos/criar', 'App\Http\Controllers\TopicosController@criarTopicoComMensagem')->name('topicos.criarTopicoComMensagem');
+  Route::post('{id_usuario}/mensagens/{id_topico}', 'App\Http\Controllers\MensagensController@criarMensagem')->name('mensagens.criarMensagem');
+  Route::get('{id_topico}/mensagens', 'App\Http\Controllers\MensagensController@listarMensagensPorTopico')->name('mensagens.listarMensagensPorTopico');
   
-
 });
 
 Route::get('/', function () {
