@@ -5,7 +5,8 @@ const links = [
     { route: "/", label: "Home"},
     { route: "/exposicoes", label: "Exposições"},
     { route: "/forum", label: "Fórum"},
-    { route: "/termos", label: "Termos de Uso"}
+    { route: "/termos", label: "Termos de Uso"},
+    { route: "/editais", label: "Editais"}
 ]
 
 export class Menu extends Component {

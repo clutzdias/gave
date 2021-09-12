@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import Exposicoes from '../components/Exposicoes';
-import Forum from '../components/Forum';
-import Home from '../components/Home';
-import Termos from '../components/Termos';
+import Exposicoes from '../components/exposicoes/Exposicoes';
+import Forum from '../components/forum/Forum';
+import Home from '../components/home/Home';
+import Termos from '../components/termos/Termos';
+import Editais from '../components/editais/Editais';
+
+
 
 
 export class Routes extends Component{
@@ -13,6 +16,7 @@ export class Routes extends Component{
                 <Switch>
                     <Route exact path='/' component={Home}/>
                     <Route path='/exposicoes' component={Exposicoes}/>
+                    <Route patch='/editais' component={Editais}/>
                     <Route path='/forum' component={Forum}/>
                     <Route path='/termos' component={Termos}/>
                 </Switch>
