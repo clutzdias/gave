@@ -20,11 +20,11 @@ Rodar o comando: composer install
 
 Criar uma cópia do arquivo .env.example, dar o nome de .env, e editar as informações do banco de dados conforme trecho abaixo, substituindo o PORT, o USERNAME e PASSWORD conforme a configuração da sua máquina:
 
-![config_env](https://github.com/clutzdias/gave/blob/master/imagens/config_env.png)
+![config_env](https://github.com/clutzdias/gave/blob/master/backend/imagens/config_env.png)
 
 Editar o arquivo database.php, fazendo as substituições de 'port', 'username' e 'password' conforme as configurações da sua máquina:
 
-![config_database](https://github.com/clutzdias/gave/blob/master/imagens/config_database.png)
+![config_database](https://github.com/clutzdias/gave/blob/master/backend/imagens/config_database.png)
 
 Após o término da instalação, rodar as migrations: php artisan migrate
 
