@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Classes\Util;
 use App\Models\Exposicao;
+use App\Models\Trabalho;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +33,7 @@ class ExposicoesService {
     private function getExposicaoPorEdital($id_edital){
 
         $query = DB::table('exposicoes')
-                    ->select('exposicoes.*')
+                    ->select('exposicoes.id')
                     ->where('exposicoes.edital', '=', $id_edital);
         return $query->get();
     }
@@ -40,7 +42,7 @@ class ExposicoesService {
 
         $exposicao = $this->getExposicaoPorEdital($id_edital);
 
-        if ($exposicao){
+        if (count($exposicao) > 0){
             return [
                 'success' => 0,
                 'message' => 'Já existe uma exposição cadastrada para este edital'
@@ -60,24 +62,43 @@ class ExposicoesService {
                     'message' => 'Nenhum trabalho foi selecionado para esta exposicao'
                 ];
             } else {
+                $id_exposicao = Util::newGUID();
+
                 $exposicao = new Exposicao();
                 $trabalhos = $data['trabalhos'];
 
-                $exposicao->id = Util::newGUID();
                 $exposicao->edital = $id_edital;
                 $exposicao->fill($data);
 
                 DB::beginTransaction();
 
                 try{
-                    $exposicao->save();
+                    DB::table('exposicoes')
+                        ->insert(['id' => $id_exposicao,
+                                'titulo' => $exposicao->titulo,
+                                'data_inicio' => $exposicao->data_inicio,
+                                'data_fim' => $exposicao->data_fim,
+                                'edital' => $id_edital,
+                                'curador' => $exposicao->curador]);
 
-                    foreach($trabalhos as $trabalho){
-                        DB::table('trabalhosexposicoes')
-                        ->insert(['exposicao' => $exposicao->id,
-                                'trabalho' => $trabalho->id,
-                                'artista' => $trabalho->artista]);
-                    }
+                    foreach($trabalhos as $trabalho_id){
+                        $trabalho = Trabalho::find($trabalho_id);
+                        $id = Util::newGUID();
+
+                        if($trabalho){
+                            DB::table('trabalhosexposicoes')
+                                ->insert(['id' => $id,
+                                    'exposicao' => $id_exposicao,
+                                    'trabalho' => $trabalho_id,
+                                    'artista' => $trabalho->artista]);
+                        }else {
+                            return [
+                                'success' => 0,
+                                'message' => 'Trabalho nao cadastrado.'
+                            ];
+
+                        }     
+                    } 
 
                     DB::commit();
 
@@ -89,10 +110,10 @@ class ExposicoesService {
 
                 }catch(Exception $e){
                     DB::rollBack();
-                    return [
+                     return [
                         'success' => 2,
                         'message' => 'Falha ao gravar exposicao'
-                    ];
+                    ]; 
 
                 }
             }
@@ -100,7 +121,10 @@ class ExposicoesService {
     }
 
     public function getExposicoes(){
-        return Exposicao::where('exposicao_aberta', true)
+
+        $data = new DateTime('now');
+        return Exposicao::where('data_fim', '>=', $data)
+                        ->where('data_inicio', '<=', $data)
                         ->get();
     }
 

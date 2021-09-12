@@ -21,7 +21,6 @@ class CriarTabelaExposicoes extends Migration
             $table->text('titulo');
             $table->date('data_inicio');
             $table->date('data_fim');
-            $table->boolean('exposicao_aberta');
             $table->uuid('curador');
             $table->foreign('edital')->references('id')->on('editais');
             $table->foreign('curador')->references('id')->on('usuarios');

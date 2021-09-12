@@ -74,7 +74,7 @@ class TrabalhosController extends Controller
                 $resposta = $this->getService()->criarTrabalho($data, $path);
 
                 if ($resposta['success'] == 0){
-                    return new JsonResponse($resposta['message'], 418);   
+                    return new JsonResponse($resposta['message'], 400);   
                 } else {
                     return new JsonResponse($resposta['message'], 201);
                 }   

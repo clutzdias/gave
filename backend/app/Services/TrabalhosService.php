@@ -12,12 +12,10 @@ class TrabalhosService {
     protected function trabalhoValidator($data)
     {
         $validator = Validator::make($data, [
-            'conteudo' => 'required',
             'titulo' => 'required',
             'tecnica' => 'required',
             'ano' => 'required'
         ],[
-            'conteudo.required' => 'Conteudo nao especificado',
             'titulo.required' => 'Titulo do trabalho nao informado',
             'tecnica.required' => 'Tecnica do trabalho nao informada',
             'ano.required' => 'Ano do trabalho nao informado'

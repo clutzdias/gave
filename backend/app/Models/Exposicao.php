@@ -15,7 +15,6 @@ class Exposicao extends Model
         'titulo',
         'data_inicio',
         'data_fim',
-        'exposicao_aberta',
         'curador'
     ];
 
