@@ -4,7 +4,7 @@ import { ExposicoesService } from '../services/exposicoes.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { USUARIOS } from '../mocks/mock-usuarios';
 import { EDITAL } from '../mocks/mock-edital';
-import { USUARIOS_DB, EDITAL_DB } from '../const/localDBconsts';
+import { USUARIOS_DB, EDITAL_DB } from '../const/genericConsts';
 
 @Component({
   selector: 'app-home',

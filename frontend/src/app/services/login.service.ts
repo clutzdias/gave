@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/usuario';
 import { LocalStorageService } from './local-storage.service';
-import { USUARIO_LOGADO_DB, USUARIOS_DB } from '../const/localDBconsts';
+import { USUARIO_LOGADO_DB, USUARIOS_DB } from '../const/genericConsts';
 
 @Injectable({
   providedIn: 'root'

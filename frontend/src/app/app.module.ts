@@ -8,6 +8,7 @@ import { TopicosComponent } from './topicos/topicos.component';
 import { TopicoComponent } from './topicos/topico/topico.component';
 import { FormTopicoComponent } from './topicos/form-topico/form-topico.component';
 import { LogsComponent } from './logs/logs.component';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { LogsComponent } from './logs/logs.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MdbFormsModule
   ],
   providers: [
     LocalStorageService

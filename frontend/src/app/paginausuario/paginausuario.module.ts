@@ -30,4 +30,4 @@ import { TrabalhosService } from '../services/trabalhos.service';
         TrabalhosService
     ]
 })
-export class LoginModule {}
+export class PaginaUsuarioModule {}

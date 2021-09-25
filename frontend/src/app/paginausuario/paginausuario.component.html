@@ -3,15 +3,15 @@
     <button (click)="entrar()">Entrar</button>
 </div>
 
-<div *ngIf="usuario">
+<div class="container-fluid" *ngIf="usuario">
     <h2>Bem-vindo(a), {{ usuario?.nome }}!</h2>
     <p>Email: {{ usuario?.email }}</p>
     <p>Cidade: {{ usuario?.cidade }}</p>
     <p>Estado: {{ usuario?.estado }}</p>
-    <p>Perfil: {{ usuario?.perfil }}</p>
+    <!-- <p>Perfil: {{ usuario?.perfil }}</p> -->
 
-    <div *ngIf="perfilArtista">
-        <div *ngIf="trabalhosUsuario">
+    <div class="container-fluid" *ngIf="perfilArtista">
+        <div *ngIf="trabalhosUsuario.length > 0">
             <p>Trabalhos submetidos:</p>
             <div *ngFor="let trabalho of trabalhosUsuario">
                 <p>Titulo: {{ trabalho.titulo }}</p>
@@ -19,5 +19,22 @@
                 <p>Ano: {{ trabalho.ano }}</p>
             </div>
         </div>
+
+        <div class="container-fluid">
+            <form [formGroup]="formGroup" novalidate (ngSubmit)="enviar(formGroup)">
+                <p><label for="titulo">Título</label></p>
+                <input type="text" id="titulo" formControlName="titulo" placeholder="Título do trabalho">
+                <p><label for="tecnica">Técnica</label></p>
+                <input type="text" id="tecnica" formControlName="tecnica" placeholder="Técnica do trabalho">
+                <p><label for="ano">Ano</label></p>
+                <input type="text" id="ano" formControlName="ano" placeholder="Ano do trabalho">
+                <p><label for="resumo">Resumo</label></p>
+                <input type="text" id="resumo" formControlName="resumo" placeholder="Resumo descritivo do trabalho">
+                <p><label for="image">Arquivo</label></p>
+                <input type="file" id="image" (change)="onSelectFile($event)" placeholder="Selecione o arquivo para upload.">
+                <p><button type="submit">Enviar</button></p>
+            </form>
+        </div>
+
     </div>
 </div>
