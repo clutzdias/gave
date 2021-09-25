@@ -1,0 +1,23 @@
+<div *ngIf="!usuario">
+    <p>Você ainda não logou no sistema.</p>
+    <button (click)="entrar()">Entrar</button>
+</div>
+
+<div *ngIf="usuario">
+    <h2>Bem-vindo(a), {{ usuario?.nome }}!</h2>
+    <p>Email: {{ usuario?.email }}</p>
+    <p>Cidade: {{ usuario?.cidade }}</p>
+    <p>Estado: {{ usuario?.estado }}</p>
+    <p>Perfil: {{ usuario?.perfil }}</p>
+
+    <div *ngIf="perfilArtista">
+        <div *ngIf="trabalhosUsuario">
+            <p>Trabalhos submetidos:</p>
+            <div *ngFor="let trabalho of trabalhosUsuario">
+                <p>Titulo: {{ trabalho.titulo }}</p>
+                <p>Técnica: {{ trabalho.tecnica }}</p>
+                <p>Ano: {{ trabalho.ano }}</p>
+            </div>
+        </div>
+    </div>
+</div>

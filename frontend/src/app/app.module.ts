@@ -3,20 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { HomeModule } from './home/home.module';
+import { LocalStorageService } from './services/local-storage.service';
+import { TopicosComponent } from './topicos/topicos.component';
+import { TopicoComponent } from './topicos/topico/topico.component';
+import { FormTopicoComponent } from './topicos/form-topico/form-topico.component';
+import { LogsComponent } from './logs/logs.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LogsComponent,
+    TopicosComponent,
+    TopicoComponent,
+    FormTopicoComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HomeModule
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    LocalStorageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

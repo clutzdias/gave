@@ -1,0 +1,20 @@
+
+
+<h2>Exposições</h2>
+<ul class="exposicoes">
+    <li *ngFor="let exposicao of exposicoes"> 
+        <a [routerLink]="['exposicao', exposicao.id]">
+            <span>Título: </span>{{ exposicao.titulo }} <br>
+        </a>
+        <br>
+    </li>
+</ul>
+
+
+<br>
+<br>
+
+
+
+
+

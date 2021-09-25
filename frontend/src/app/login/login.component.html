@@ -1,0 +1,9 @@
+<div>
+    <form [formGroup]="formGroup" novalidate (ngSubmit)="login(formGroup)">
+        <p><label for="email">Email</label></p>
+        <input type="email" id="email" formControlName="username" placeholder="seuemail@email.com">
+        <p><label for="password">Senha</label></p>
+        <input type="password" id="password" formControlName="password" placeholder="Senha">
+        <p><button type="submit">Entrar</button></p>
+    </form>
+</div>
