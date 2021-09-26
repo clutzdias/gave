@@ -54,6 +54,8 @@ class TrabalhosController extends Controller
 
     public function criarTrabalho(Request $request){
 
+        //var_dump($request->all());
+
         try{
 
             $data = request()->except('image');
@@ -65,11 +67,15 @@ class TrabalhosController extends Controller
 
                 $extension = $request->image->extension();
 
-                $nameFile = "{$name} . {$extension}";
+                $nameFile = "{$name}.{$extension}";
 
                 $upload = $request->image->storeAs('trabalhos', $nameFile);
 
-                $path = asset($upload);
+                //var_dump(storage_path());
+
+                $path = storage_path('app/public/trabalhos/' . $nameFile);
+
+                //$path = asset($upload);
         
                 $resposta = $this->getService()->criarTrabalho($data, $path);
 

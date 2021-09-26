@@ -8,8 +8,6 @@ abstract class PerfilUsuario{
     const SIMPLES = 0;
     const ARTISTA = 1;
     const SELECIONADOR = 2;
-    const ADMINISTRADOR = 3;
-    const MODERADOR = 4;
 }
 
 class Usuario extends Model{

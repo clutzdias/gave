@@ -51,25 +51,15 @@ export class PaginausuarioComponent implements OnInit {
   }
 
   public enviar(form: any){
-    const formData = new FormData();
 
-    if (form.valid) {
-      /* const dados = {
-                      titulo: form.value.titulo,
-                      tecnica: form.value.tecnica,
-                      ano: form.value.ano,
-                      resumo: form.value.resumo
-                    }; */
+    console.log(form);
 
-      formData.append('titulo', form.value.titulo);
-      formData.append('tecnica', form.value.tecnica);
-      formData.append('ano', form.value.ano);
-      formData.append('resumo', form.value.resumo);
-
-      this.formGroup.get('image')?.setValue(this.file);
-      formData.append('image', this.formGroup.get('image')?.value);
-
-      this.trabalhosService.enviarTrabalho(formData);          
+    if (this.file != null){
+      this.trabalhosService.enviarTrabalho(form, this.file)
+        .subscribe(
+          (res) => console.log(res),
+          (err) => console.log(err)
+        );
     }
 
   }

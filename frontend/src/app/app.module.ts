@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LocalStorageService } from './services/local-storage.service';
@@ -22,7 +22,8 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MdbFormsModule
+    MdbFormsModule,
+    HttpClientModule
   ],
   providers: [
     LocalStorageService
