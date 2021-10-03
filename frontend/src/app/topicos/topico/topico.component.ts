@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Topico } from 'src/app/interfaces/topico';
 
 @Component({
   selector: 'app-topico',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./topico.component.scss']
 })
 export class TopicoComponent implements OnInit {
+
+  public topico: Topico = {} as Topico;
 
   constructor() { }
 

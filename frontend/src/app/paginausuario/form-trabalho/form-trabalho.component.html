@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>Dados do trabalho</h2>
+    <form [formGroup]="formGroup" novalidate (ngSubmit)="enviar(formGroup)">
+        <fieldset [disabled]="enviando">
+            <label for="titulo">Título</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Título do trabalho" required>
+            </div>
+            <label for="tecnica">Técnica</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="tecnica" formControlName="tecnica" placeholder="Técnica do trabalho" required>
+            </div>
+            <label for="ano">Ano</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="ano" formControlName="ano" placeholder="Ano do trabalho" required>
+            </div>
+            <label for="resumo">Resumo</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="resumo" formControlName="resumo" placeholder="Resumo descritivo do trabalho" required>
+            </div>
+            <label for="conteudo">Arquivo</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="conteudo" formControlName="conteudo" placeholder="Informe a URL de localização do arquivo." required>
+            </div>
+            
+            <div>
+                <button type="submit">Enviar</button>
+                <button type="button" (click)="back()">Voltar</button>
+            </div>
+            
+        </fieldset>
+    </form>
+</div>

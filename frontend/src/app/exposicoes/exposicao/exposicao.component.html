@@ -1,6 +1,6 @@
 <div *ngIf="exposicao">
     <h2>{{ exposicao.titulo | uppercase }}</h2>
-    <span>Edital: </span>{{ exposicao.edital }}<br>
+    <span>Edital: </span>{{ exposicao.edital.titulo }}<br>
     <span>Curador: </span>{{ exposicao.curador }}<br>
     <span>Data de início: </span>{{ exposicao.data_inicio | date : 'dd/MM/yyyy' }} <br>
     <span>Data de término: </span>{{ exposicao.data_fim | date : 'dd/MM/yyyy' }} <br>

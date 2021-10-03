@@ -57,6 +57,8 @@ class TopicosController extends Controller
 
         $data = request()->all();
 
+        //var_dump($data);
+
         try{
             $resposta = $this->getService()->criarTopicoComMensagem($data,$id_usuario);
 

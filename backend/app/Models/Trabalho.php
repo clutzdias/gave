@@ -14,7 +14,8 @@ class Trabalho extends Model{
         'titulo',
         'tecnica',
         'ano',
-        'resumo'
+        'resumo',
+        'edital'
     ];
 
     public function usuario()

@@ -14,17 +14,19 @@ class TrabalhosService {
         $validator = Validator::make($data, [
             'titulo' => 'required',
             'tecnica' => 'required',
-            'ano' => 'required'
+            'ano' => 'required',
+            'resumo' => 'required'
         ],[
             'titulo.required' => 'Titulo do trabalho nao informado',
             'tecnica.required' => 'Tecnica do trabalho nao informada',
-            'ano.required' => 'Ano do trabalho nao informado'
+            'ano.required' => 'Ano do trabalho nao informado',
+            'resumo.required' => 'Resumo descritivo do trabalho nao informado'
         ]);
 
         return $validator;
     }
 
-    public function criarTrabalho($data, $path)
+    public function criarTrabalho($data)
     {
         $validator = $this->trabalhoValidator($data);
 
@@ -36,7 +38,6 @@ class TrabalhosService {
         } else {
             $trabalho = new Trabalho();
             $trabalho->id = Util::newGuid();
-            $trabalho->conteudo = $path;
             $trabalho->fill($data);
             $trabalho->save();
 
@@ -57,7 +58,7 @@ class TrabalhosService {
                                 'trabalhos.tecnica',
                                 'trabalhos.ano',
                                 'trabalhos.resumo', 
-                                'usuarios.nome')
+                                'usuarios.nome as artista')
                         ->where('trabalhos.edital', '=', $id_edital);
         
         if($id_usuario != ''){
@@ -66,6 +67,19 @@ class TrabalhosService {
         
         return $query->get();
 
+    }
+
+    public function findTrabalho($id_trabalho){
+        $trabalho = Trabalho::find($id_trabalho);
+
+        if(!$trabalho){
+            return [
+                'success' => 0,
+                'message' => 'Trabalho nao encontrado'
+            ];
+        }else{
+            return $trabalho;
+        }
     }
 
     public function atualizarTrabalho($data, $id_trabalho, $path){

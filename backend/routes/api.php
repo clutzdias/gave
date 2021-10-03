@@ -1,5 +1,6 @@
 <?php
 
+use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::group(array('prefix' => 'v1'), function()
   Route::get('{id_edital}/trabalhos/{id_usuario}', 'App\Http\Controllers\TrabalhosController@trabalhosPorUsuario')->name('trabalhos.trabalhosPorUsuario');
   Route::post('/trabalhos/criar', 'App\Http\Controllers\TrabalhosController@criarTrabalho')->name('trabalhos.criarTrabalho');
   Route::patch('/trabalhos/{id_trabalho}', 'App\Http\Controllers\TrabalhosController@atualizarTrabalho')->name('trabalhos.atualizarTrabalho');
+  Route::get('/trabalhos/{id_trabalho}', 'App\Http\Controllers\TrabalhosController@getTrabalho')->name('trabalhos.getTrabalho');
   Route::delete('/trabalhos/{id_usuario}/excluir/{id_trabalho}', 'App\Http\Controllers\TrabalhosController@excluirTrabalho')->name('trabalhos.excluirTrabalho');
   Route::get('/topicos', 'App\Http\Controllers\TopicosController@listarTopicos')->name('topicos.listarTopicos');
   Route::post('{id_usuario}/topicos/criar', 'App\Http\Controllers\TopicosController@criarTopicoComMensagem')->name('topicos.criarTopicoComMensagem');
@@ -39,6 +41,11 @@ Route::group(array('prefix' => 'v1'), function()
 
 Route::get('/', function () {
     return redirect('api');
+});
+
+Route::get('/imagens/{filename}', function($filename) {
+    $file = \Illuminate\Support\Facades\Storage::get($filename);
+    return response($file, 200)->header('Content-Type', 'image/jpeg');
 });
 
 /* Route::middleware('auth:api')->get('/user', function (Request $request) {

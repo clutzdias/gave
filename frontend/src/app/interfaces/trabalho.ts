@@ -3,7 +3,7 @@ import { Edital } from "./edital";
 export interface Trabalho {
     id: string;
     conteudo: string;
-    usuario: string;
+    artista: string;
     titulo: string;
     tecnica: string;
     ano: string;

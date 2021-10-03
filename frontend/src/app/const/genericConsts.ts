@@ -6,3 +6,10 @@ export const EDITAL_DB = 'edital';
 
 //Constantes do sistema
 export const BASE_API_URL = 'http://localhost:8000/api/v1/';
+
+//Constante de URL de visualização de imagens do google drive
+export const URL_DRIVE = 'https://drive.google.com/uc?export=view&id=';
+
+
+
+

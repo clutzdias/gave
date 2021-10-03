@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { USUARIO_LOGADO_DB } from './const/genericConsts';
 import { Usuario } from './interfaces/usuario';
 import { LocalStorageService } from './services/local-storage.service';
@@ -8,13 +8,18 @@ import { LocalStorageService } from './services/local-storage.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-
-  public usuarioLogado?: Usuario;
+export class AppComponent implements OnDestroy {
   title = 'gave';
+  constructor(){
+  }
 
-  constructor(private localDB: LocalStorageService){
-    this.usuarioLogado = this.localDB.get(USUARIO_LOGADO_DB);
+  @HostListener("window:beforeunload",["$event"])
+  clearLocalStorage(){
+    localStorage.clear();
+  }
+
+  ngOnDestroy(){
+    localStorage.clear();
 
   }
 }

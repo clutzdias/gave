@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\TrabalhosService;
+use Illuminate\Support\Facades\Storage;
 
 class TrabalhosController extends Controller
 {
@@ -52,32 +53,66 @@ class TrabalhosController extends Controller
 
     }
 
+    public function getTrabalho($id_trabalho){
+        try{
+
+            $dados = $this->getService()->findTrabalho($id_trabalho);
+
+            if ($dados['success'] == 0){
+                return new JsonResponse($dados['message'], 404);   
+            } else {
+                return new JsonResponse($dados, 200);
+            } 
+            
+
+        }catch(Exception $e){
+            return new JsonResponse($e->getMessage(), 500);
+
+        }
+    }
+
     public function criarTrabalho(Request $request){
 
         //var_dump($request->all());
 
         try{
 
-            $data = request()->except('image');
+            $data = request()->all();
 
-            if ($request->hasFile('image') && $request->file('image')->isValid()){
+            $resposta = $this->getService()->criarTrabalho($data);
+
+            if ($resposta['success'] == 0){
+                return new JsonResponse($resposta['message'], 400);   
+            } else {
+                return new JsonResponse($resposta['message'], 201);
+            } 
+
+            /* if ($request->hasFile('image') && $request->file('image')->isValid()){
+                $file = $request->file('image');
 
                 //nome unico baseado em timestamp
                 $name = uniqid(date('HisYmd'));
 
-                $extension = $request->image->extension();
+                $extension = $file->extension();
 
                 $nameFile = "{$name}.{$extension}";
 
-                $upload = $request->image->storeAs('trabalhos', $nameFile);
+                //$file->storeAs('imagens/', $nameFile);
+
+                //$fullPath = 'public/storage/imagens/'.$nameFile;
+
+                //$url = asset($fullPath);
+
+                $upload = $file->storeAs('imagens', $nameFile);
 
                 //var_dump(storage_path());
 
-                $path = storage_path('app/public/trabalhos/' . $nameFile);
+                //$path = storage_path('public' . $nameFile);
+                //$url = Storage::url($nameFile);
 
-                //$path = asset($upload);
+                $url = asset($upload);
         
-                $resposta = $this->getService()->criarTrabalho($data, $path);
+                $resposta = $this->getService()->criarTrabalho($data, $url);
 
                 if ($resposta['success'] == 0){
                     return new JsonResponse($resposta['message'], 400);   
@@ -86,7 +121,7 @@ class TrabalhosController extends Controller
                 }   
             } else {
                 return new JsonResponse('O arquivo nao foi informado ou eh invalido', 400);
-            }      
+            }      */ 
 
         }catch(Exception $e){
             return new JsonResponse($e->getMessage(), 500);

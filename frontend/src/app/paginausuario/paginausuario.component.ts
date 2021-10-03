@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { USUARIO_LOGADO_DB } from '../const/genericConsts';
+import { EDITAL_DB, USUARIO_LOGADO_DB } from '../const/genericConsts';
 import { TipoPerfilUsuario } from '../enum/tipoperfilusuario';
+import { Edital } from '../interfaces/edital';
 import { Trabalho } from '../interfaces/trabalho';
 import { Usuario } from '../interfaces/usuario';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -20,9 +21,12 @@ export class PaginausuarioComponent implements OnInit {
   public perfilSelecionador: boolean = false;
   public perfilSimples: boolean = false;
   public trabalhosUsuario: Trabalho[] = [];
-  public trabalhosEdital?: Trabalho[];
+  public trabalhosEdital: Trabalho[] = [];
   public formGroup: FormGroup;
+  public formExposicaoGroup: FormGroup;
   private file?: File;
+  private edital?: Edital;
+  private trabalhosSelecionados: Trabalho[] = [];
 
   constructor(private localDB: LocalStorageService,
               private formBuilder: FormBuilder,
@@ -34,9 +38,19 @@ export class PaginausuarioComponent implements OnInit {
       tecnica: ['', Validators.compose([Validators.required])],
       ano: ['', Validators.compose([Validators.required])],
       resumo: ['', Validators.compose([Validators.required])],
-      image: ['']
+      conteudo: ['', Validators.compose([Validators.required])]
     });
+
+    this.formExposicaoGroup = this.formBuilder.group({
+      trabalhos: new FormArray([])
+    });
+
+    
    
+  }
+
+  public excluirTrabalho(id: string){
+
   }
 
   public entrar(){
@@ -52,16 +66,35 @@ export class PaginausuarioComponent implements OnInit {
 
   public enviar(form: any){
 
-    console.log(form);
+    /* console.log(form);
 
     if (this.file != null){
       this.trabalhosService.enviarTrabalho(form, this.file)
         .subscribe(
-          (res) => console.log(res),
+          (res) => this.fillTrabalhos(),
           (err) => console.log(err)
         );
-    }
+    } */
 
+    this.trabalhosService.enviarTrabalho(form)
+      .subscribe(
+        (res) => this.fillTrabalhos(),
+        (err) => console.log(err)
+      );
+
+  }
+
+  private fillTrabalhos(){
+    const id = this.usuario ? this.usuario.id : '';
+    const id_edital = this.edital ? this.edital.id : '';
+    
+    if (this.perfilArtista){
+      this.trabalhosService.getTrabalhosPorUsuario(id, id_edital)
+        .subscribe(dados => this.trabalhosUsuario = dados);
+      console.log(this.trabalhosUsuario);
+    } else if (this.perfilSelecionador){
+      this.trabalhosEdital = this.trabalhosService.getTrabalhosPorEdital(id_edital);
+    }
   }
 
   private inicializarUsuario(){
@@ -92,15 +125,31 @@ export class PaginausuarioComponent implements OnInit {
     }
   }
 
+  public submitExposicao(){
+    const ids_trabalhos = this.formExposicaoGroup.value.trabalhos
+      .map((checked: boolean, i: number) => checked ? this.trabalhosSelecionados[i].id : null)
+      .filter((v => v !== null));
+
+  }
+
+  get trabalhosFormArray(){
+    return this.formExposicaoGroup.controls.trabalhos as FormArray;
+  }
+
+  private addCheckboxes(){
+    this.trabalhosEdital.forEach(() => this.trabalhosFormArray.push(new FormControl(false)));
+  }
+
   ngOnInit(): void {
+
+    this.edital = this.localDB.get(EDITAL_DB);
+
     this.inicializarUsuario();
 
-    if (this.perfilArtista){
-      const id = this.usuario ? this.usuario.id : '';
-      this.trabalhosUsuario = this.trabalhosService.getTrabalhosPorUsuario(id);
-    }
+    this.fillTrabalhos();
 
-    
+    if (this.trabalhosEdital.length > 0) this.addCheckboxes();
+
   }
 
 }

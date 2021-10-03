@@ -21,6 +21,7 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "ajv": "^8.6.3",
     "ajv-keywords": "^5.0.0",
+    "material-design-icons": "^3.0.1",
     "mdb-angular-ui-kit": "^1.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
