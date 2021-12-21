@@ -7,6 +7,7 @@ import { LocalStorageService } from './services/local-storage.service';
 import { LogsComponent } from './logs/logs.component';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { NavbarComponent } from './navbar/navbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserModule,
     AppRoutingModule,
     MdbFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     LocalStorageService

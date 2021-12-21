@@ -4,81 +4,98 @@
 </div>
 
 <div class="container" *ngIf="usuario">
-    <h2>Bem-vindo(a), {{ usuario?.nome }}!</h2>
-    <p>Email: {{ usuario?.email }}</p>
-    <p>Cidade: {{ usuario?.cidade }}</p>
-    <p>Estado: {{ usuario?.estado }}</p>
-    <!-- <p>Perfil: {{ usuario?.perfil }}</p> -->
+  <h2>Bem-vindo(a), {{ usuario?.nome }}!</h2>
+  <p>Email: {{ usuario?.email }}</p>
+  <p>Cidade: {{ usuario?.cidade }}</p>
+  <p>Estado: {{ usuario?.estado }}</p>
+  <!-- <p>Perfil: {{ usuario?.perfil }}</p> -->
 
-    <div class="container" *ngIf="perfilArtista">
-        
-            <div class="d-flex flex-row mb-3" *ngIf="trabalhosUsuario.length > 0">
-                <p>Trabalhos submetidos:</p>
-            
-                <div *ngFor="let trabalho of trabalhosUsuario" class="p-2">
-                    <img class= "imagem-artista" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
-                    <p>Titulo: {{ trabalho.titulo }}</p>
-                    <p>Técnica: {{ trabalho.tecnica }}</p>
-                    <p>Ano: {{ trabalho.ano }}</p>
-                    <a class="btn btn-outline-secondary btn-rounded" [routerLink]="['/trabalhoedit', trabalho.id]">Editar</a>
-                    <button class="btn btn-outline-danger btn-rounded" type="button" (click)="excluirTrabalho(trabalho.id)">Excluir</button>
-                </div>
-            </div>
+  <div class="container" *ngIf="perfilArtista">
 
-            <div>
-                <a class="btn btn-outline-primary btn-rounded" routerLink="/trabalhoedit">Adicionar Trabalho</a>
-            </div>
-    
-            <!-- <div class="col-6">
-                <p>Envie seu trabalho.</p>
-                <form [formGroup]="formGroup" novalidate (ngSubmit)="enviar(formGroup)">
-                    <label for="titulo">Título</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Título do trabalho" required>
-                    </div>
-                    <label for="tecnica">Técnica</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="tecnica" formControlName="tecnica" placeholder="Técnica do trabalho" required>
-                    </div>
-                    <label for="ano">Ano</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="ano" formControlName="ano" placeholder="Ano do trabalho" required>
-                    </div>
-                    <label for="resumo">Resumo</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="resumo" formControlName="resumo" placeholder="Resumo descritivo do trabalho" required>
-                    </div>
-                    <label for="conteudo">Arquivo</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="conteudo" formControlName="conteudo" placeholder="Informe a URL de localização do arquivo." required>
-                    </div>
-                        
-                    <input type="file" id="image" (change)="onSelectFile($event)" placeholder="Selecione o arquivo para upload."> 
+    <div class="d-flex flex-row mb-3" *ngIf="trabalhosUsuario.length > 0">
+        <p>Trabalhos submetidos:</p>
 
-                    <button type="submit">Enviar</button>
-                </form>
-            </div> -->
-
-        
+        <div *ngFor="let trabalho of trabalhosUsuario" class="p-2">
+            <img class= "imagem-artista" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
+            <p>Titulo: {{ trabalho.titulo }}</p>
+            <p>Técnica: {{ trabalho.tecnica }}</p>
+            <p>Ano: {{ trabalho.ano }}</p>
+            <a class="btn btn-outline-secondary btn-rounded" [routerLink]="['/trabalhoedit', trabalho.id]">Editar</a>
+            <button class="btn btn-outline-danger btn-rounded" type="button" (click)="excluirTrabalho(trabalho.id)">Excluir</button>
+        </div>
     </div>
+
+    <div>
+        <a class="btn btn-outline-primary btn-rounded" routerLink="/trabalhoedit">Adicionar Trabalho</a>
+    </div>
+
+    <!-- <div class="col-6">
+        <p>Envie seu trabalho.</p>
+        <form [formGroup]="formGroup" novalidate (ngSubmit)="enviar(formGroup)">
+            <label for="titulo">Título</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Título do trabalho" required>
+            </div>
+            <label for="tecnica">Técnica</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="tecnica" formControlName="tecnica" placeholder="Técnica do trabalho" required>
+            </div>
+            <label for="ano">Ano</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="ano" formControlName="ano" placeholder="Ano do trabalho" required>
+            </div>
+            <label for="resumo">Resumo</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="resumo" formControlName="resumo" placeholder="Resumo descritivo do trabalho" required>
+            </div>
+            <label for="conteudo">Arquivo</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="conteudo" formControlName="conteudo" placeholder="Informe a URL de localização do arquivo." required>
+            </div>
+
+            <input type="file" id="image" (change)="onSelectFile($event)" placeholder="Selecione o arquivo para upload.">
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div> -->
+
+    </div>
+
     <div class="container" *ngIf="perfilSelecionador">
-        <form [formGroup]="formExposicaoGroup" (ngSubmit)="submitExposicao()"></form>
-            <label for="titulo_exposicao">Título da Exposição</label>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" id="titulo_exposicao" formControlName="titulo_exposicao" placeholder="Título da Exposição">
-            </div>
-            <label for="data_inicio">Data de Início</label>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" id="data_inicio" formControlName="data_inicio" placeholder="dd/mm/aaaa" onfocus="(this.type='date')">
-            </div>
-            <label for="data_fim">Data de término</label>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" id="data_fim" formControlName="data_fim" placeholder="dd/mm/aaaa" onfocus="(this.type='date')">
-            </div>
-            <label formArrayName="trabalhos" *ngFor="let trabalho of trabalhosFormArray.controls; let i = index">Trabalho:</label>
-                <input type="checkbox" formControlName="trabalho.artista">
+      <form [formGroup]="formExposicaoGroup" (ngSubmit)="submitExposicao()">
+        <label for="titulo_exposicao">Título da Exposição</label>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="titulo_exposicao" formControlName="titulo_exposicao" placeholder="Título da Exposição">
+        </div>
+        <label for="data_inicio">Data de Início</label>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="data_inicio" formControlName="data_inicio" placeholder="dd/mm/aaaa" onfocus="(this.type='date')">
+        </div>
+        <label for="data_fim">Data de término</label>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="data_fim" formControlName="data_fim" placeholder="dd/mm/aaaa" onfocus="(this.type='date')">
+        </div>
+        <div class="input-group mb-3">
+          <input type="submit">
+        </div>
 
-        
-
+        <mat-selection-list formControlName="trabalhos_selecionados">
+          <mat-list-option *ngFor="let trabalho of trabalhosEdital" [value]='trabalho.id' MatListOptionCheckboxPosition="after">
+            <div>
+              <img class="imagem-selecionador" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
+              <p>T�tulo: {{trabalho.titulo}}</p>
+              <p>Artista: {{trabalho.artista}}</p>
+            </div>
+          </mat-list-option>
+        </mat-selection-list>
+      </form>
     </div>
+
+    <div class="container" *ngIf="perfilAdministrador">
+      <div *ngFor="let usuario of listaUsuarios">
+
+
+      </div>
+  </div>
 </div>
+

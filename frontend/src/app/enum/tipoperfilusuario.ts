@@ -1,5 +1,6 @@
 export enum TipoPerfilUsuario {
     Simples,
     Artista,
-    Selecionador
+    Selecionador,
+    Administrador
 }

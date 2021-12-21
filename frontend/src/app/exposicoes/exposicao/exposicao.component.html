@@ -4,7 +4,7 @@
     <span>Curador: </span>{{ exposicao.curador }}<br>
     <span>Data de início: </span>{{ exposicao.data_inicio | date : 'dd/MM/yyyy' }} <br>
     <span>Data de término: </span>{{ exposicao.data_fim | date : 'dd/MM/yyyy' }} <br>
-    <div>><button (click)="goBack()">Voltar</button></div>
+    <div><button type="button" (click)="goBack()">Voltar</button></div>
 </div>
 
 

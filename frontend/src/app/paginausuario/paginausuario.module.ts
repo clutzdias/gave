@@ -1,3 +1,4 @@
+import { MatListModule } from '@angular/material/list';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +15,7 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
-    }, 
+    },
     {
         path: 'trabalhoedit',
         loadChildren: () => import('./form-trabalho/form-trabalho.module').then(m => m.FormTrabalhoModule)
@@ -30,7 +31,9 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         RouterModule.forChild(routes),
-        ReactiveFormsModule, 
+        ReactiveFormsModule,
+        MatListModule
+
     ],
     declarations: [
         PaginausuarioComponent,

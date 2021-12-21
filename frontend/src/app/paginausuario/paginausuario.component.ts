@@ -1,11 +1,14 @@
+import { ExposicoesService } from 'src/app/services/exposicoes.service';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSelectionListChange } from '@angular/material/list';
 import { Router } from '@angular/router';
-import { EDITAL_DB, USUARIO_LOGADO_DB } from '../const/genericConsts';
+import { EDITAL_DB, USUARIO_LOGADO_DB, USUARIOS_DB } from '../const/genericConsts';
 import { TipoPerfilUsuario } from '../enum/tipoperfilusuario';
 import { Edital } from '../interfaces/edital';
 import { Trabalho } from '../interfaces/trabalho';
 import { Usuario } from '../interfaces/usuario';
+import { USUARIOS } from '../mocks/mock-usuarios';
 import { LocalStorageService } from '../services/local-storage.service';
 import { TrabalhosService } from '../services/trabalhos.service';
 
@@ -20,6 +23,7 @@ export class PaginausuarioComponent implements OnInit {
   public perfilArtista: boolean = false;
   public perfilSelecionador: boolean = false;
   public perfilSimples: boolean = false;
+  public perfilAdministrador: boolean = false;
   public trabalhosUsuario: Trabalho[] = [];
   public trabalhosEdital: Trabalho[] = [];
   public formGroup: FormGroup;
@@ -27,11 +31,13 @@ export class PaginausuarioComponent implements OnInit {
   private file?: File;
   private edital?: Edital;
   private trabalhosSelecionados: Trabalho[] = [];
+  public listaUsuarios: Usuario[] = [];
 
   constructor(private localDB: LocalStorageService,
               private formBuilder: FormBuilder,
               private router: Router,
-              private trabalhosService: TrabalhosService)
+              private trabalhosService: TrabalhosService,
+              private exposicoesService: ExposicoesService)
   {
     this.formGroup = this.formBuilder.group({
       titulo: ['', Validators.compose([Validators.required])],
@@ -42,11 +48,12 @@ export class PaginausuarioComponent implements OnInit {
     });
 
     this.formExposicaoGroup = this.formBuilder.group({
-      trabalhos: new FormArray([])
+      titulo_exposicao: ['', Validators.compose([Validators.required])],
+      data_inicio: ['', Validators.compose([Validators.required])],
+      data_fim: ['', Validators.compose([Validators.required])],
+      trabalhos_selecionados: ['', Validators.compose([Validators.required])]
     });
 
-    
-   
   }
 
   public excluirTrabalho(id: string){
@@ -87,7 +94,7 @@ export class PaginausuarioComponent implements OnInit {
   private fillTrabalhos(){
     const id = this.usuario ? this.usuario.id : '';
     const id_edital = this.edital ? this.edital.id : '';
-    
+
     if (this.perfilArtista){
       this.trabalhosService.getTrabalhosPorUsuario(id, id_edital)
         .subscribe(dados => this.trabalhosUsuario = dados);
@@ -117,6 +124,10 @@ export class PaginausuarioComponent implements OnInit {
           this.perfilSimples = true;
           break;
         }
+        case TipoPerfilUsuario.Administrador: {
+          this.perfilAdministrador = true;
+          break;
+        }
         default: {
           this.perfilSimples = true;
           break;
@@ -126,29 +137,27 @@ export class PaginausuarioComponent implements OnInit {
   }
 
   public submitExposicao(){
-    const ids_trabalhos = this.formExposicaoGroup.value.trabalhos
-      .map((checked: boolean, i: number) => checked ? this.trabalhosSelecionados[i].id : null)
-      .filter((v => v !== null));
 
+    this.exposicoesService.criarExposicao(this.formExposicaoGroup)
+      .subscribe(
+        (res) => console.log(res), //Incluir lógica para redirecionar para o componente de exposição
+        (err) => console.log(err)
+      );
   }
 
   get trabalhosFormArray(){
     return this.formExposicaoGroup.controls.trabalhos as FormArray;
   }
 
-  private addCheckboxes(){
-    this.trabalhosEdital.forEach(() => this.trabalhosFormArray.push(new FormControl(false)));
-  }
-
   ngOnInit(): void {
 
     this.edital = this.localDB.get(EDITAL_DB);
 
+    this.listaUsuarios = this.localDB.get(USUARIOS_DB);
+
     this.inicializarUsuario();
 
     this.fillTrabalhos();
-
-    if (this.trabalhosEdital.length > 0) this.addCheckboxes();
 
   }
 
