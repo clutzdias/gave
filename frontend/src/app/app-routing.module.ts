@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+import { ForumModule } from './forum/forum.module';
+import { TopicoModule } from './forum/topico/topico.module';
 
 const routes: Routes = [
   {
     path: '', redirectTo: '/home', pathMatch: 'full'
   },
-  { 
-    path: 'exposicoes', 
+  {
+    path: 'exposicoes',
     loadChildren: () => import ('./exposicoes/exposicoes.module').then(m => m.ExposicoesModule)
   },
   {
@@ -31,15 +33,11 @@ const routes: Routes = [
   },
   {
     path: 'forum',
-    loadChildren: () => import('./topicos/topicos.module').then(m => m.TopicosModule)
+    loadChildren: () => import('./forum/forum.module').then(m => ForumModule)
   },
   {
     path: 'topico',
-    loadChildren: () => import('./topicos/topico/topico.module').then(m => m.TopicoModule)
-  }, 
-  {
-    path: 'criartopico',
-    loadChildren: () => import('./topicos/form-topico/form-topico.module').then(m => m.FormTopicoModule)
+    loadChildren: () => import('./forum/topico/topico.module').then(m => TopicoModule)
   }
 ];
 
