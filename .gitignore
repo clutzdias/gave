@@ -1,0 +1,77 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+#### Angular Files ####
+
+# compiled output
+/frontend/dist
+/frontend/tmp
+/frontend/out-tsc
+
+# Only exists if Bazel was run
+/frontend/bazel-out
+
+# dependencies
+/frontend/node_modules
+
+# profiling files
+/frontend/chrome-profiler-events*.json
+
+# IDEs and editors
+/frontend/.idea
+/frontend/.project
+/frontend/.classpath
+/frontend/.c9/
+/frontend/*.launch
+/frontend/.settings/
+/frontend/*.sublime-workspace
+
+# IDE - VSCode
+/frontend/.vscode/*
+/frontend/!.vscode/settings.json
+/frontend/!.vscode/tasks.json
+/frontend/!.vscode/launch.json
+/frontend/!.vscode/extensions.json
+/frontend/.history/*
+
+# misc
+/frontend/.sass-cache
+/frontend/connect.lock
+/frontend/coverage
+/frontend/libpeerconnection.log
+/frontend/npm-debug.log
+/frontend/yarn-error.log
+/frontend/testem.log
+/frontend/typings
+/frontend/vendor
+
+# System Files
+/frontend/.DS_Store
+/frontend/Thumbs.db
+
+
+#### Laravel Files ####
+
+/backend/vendor
+/backend/node_modules
+/backend/npm-debug.log
+/backend/yarn-error.log
+
+# Laravel 4 specific
+/backend/bootstrap/compiled.php
+/backend/app/storage
+
+# Laravel 5 & Lumen specific
+/backend/public/storage
+/backend/public/hot
+
+# Laravel 5 & Lumen specific with changed public path
+/backend/public_html/storage
+/backend/public_html/hot
+
+/backend/storage/*.key
+/backend/.env
+/backend/Homestead.yaml
+/backend/Homestead.json
+/backend/.vagrant
+/backend/.phpunit.result.cache
+
