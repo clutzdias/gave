@@ -20,7 +20,6 @@
             <p>Titulo: {{ trabalho.titulo }}</p>
             <p>TÃ©cnica: {{ trabalho.tecnica }}</p>
             <p>Ano: {{ trabalho.ano }}</p>
-            <a class="btn btn-outline-secondary btn-rounded" [routerLink]="['/trabalhoedit', trabalho.id]">Editar</a>
             <button class="btn btn-outline-danger btn-rounded" type="button" (click)="excluirTrabalho(trabalho.id)">Excluir</button>
         </div>
     </div>
@@ -83,7 +82,7 @@
           <mat-list-option *ngFor="let trabalho of trabalhosEdital" [value]='trabalho.id' MatListOptionCheckboxPosition="after">
             <div>
               <img class="imagem-selecionador" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
-              <p>Título: {{trabalho.titulo}}</p>
+              <p>Tï¿½tulo: {{trabalho.titulo}}</p>
               <p>Artista: {{trabalho.artista}}</p>
             </div>
           </mat-list-option>

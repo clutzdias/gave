@@ -16,8 +16,10 @@ class TopicosService {
     {
         $validator = Validator::make($data, [
             'titulo' => 'required',
+            'conteudo' => 'required'
         ],[
             'titulo.required' => 'Titulo do topico nao informado',
+            'conteudo.required' => 'Conteudo nao informado'
         ]);
 
         return $validator;

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
-import { ForumModule } from './forum/forum.module';
-import { TopicoModule } from './forum/topico/topico.module';
 
 const routes: Routes = [
   {
@@ -33,11 +31,15 @@ const routes: Routes = [
   },
   {
     path: 'forum',
-    loadChildren: () => import('./forum/forum.module').then(m => ForumModule)
+    loadChildren: () => import('./forum/forum.module').then(m => m.ForumModule)
   },
   {
     path: 'topico',
-    loadChildren: () => import('./forum/topico/topico.module').then(m => TopicoModule)
+    loadChildren: () => import('./forum/topico/topico.module').then(m => m.TopicoModule)
+  },
+  {
+    path: 'criartopico',
+    loadChildren: () => import('./forum/form-topico/form-topico.module').then(m => m.FormTopicoModule)
   }
 ];
 

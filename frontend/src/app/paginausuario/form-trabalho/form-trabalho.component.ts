@@ -19,7 +19,7 @@ export class FormTrabalhoComponent implements OnInit {
   constructor(private trabalhosService: TrabalhosService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private router: Router) 
+              private router: Router)
   {
     this.formGroup = this.formBuilder.group({
       titulo: ['', Validators.compose([Validators.required])],
@@ -45,7 +45,8 @@ export class FormTrabalhoComponent implements OnInit {
 
     this.trabalhosService.enviarTrabalho(form)
         .subscribe(
-          (res) => console.log(res),
+          (res) => {this.enviando = false,
+                    this.router.navigate(['/areausuario'])},
           (err) => this.enviando = false
         );
 

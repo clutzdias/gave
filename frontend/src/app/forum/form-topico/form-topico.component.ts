@@ -1,4 +1,8 @@
+import { ForumService } from './../../services/forum.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-form-topico',
@@ -7,7 +11,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormTopicoComponent implements OnInit {
 
-  constructor() { }
+  public formGroup: FormGroup;
+  public enviando: boolean = false;
+
+  constructor(private formBuilder: FormBuilder,
+              private router: Router,
+              private forumService: ForumService)
+  {
+    this.formGroup = this.formBuilder.group({
+      titulo: ['', Validators.compose([Validators.required])],
+      conteudo: ['', Validators.compose([Validators.required])]
+    });
+  }
+
+  public enviar(form: FormGroup){
+    console.log()
+
+    this.forumService.criarTopico(form)
+        .subscribe(
+          (res) => {this.enviando = false,
+                    this.router.navigate(['/forum'])},
+          (err) => this.enviando = false
+        );
+
+  }
+
+  public back(){
+    this.router.navigate(['/forum']);
+  }
 
   ngOnInit(): void {
   }

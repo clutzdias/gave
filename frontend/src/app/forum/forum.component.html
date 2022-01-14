@@ -1,12 +1,15 @@
-<div *ngIf="topicos.length == 0">
-  <p>Nenhum tópico cadastrado!</p>
-  <p *ngIf="!usuario">Faça o login no sistema para cadastrar um tópico.</p>
-  <p *ngIf="usuario"><button type="button" (click)="criarTopico()">Criar Tópico</button></p>
-</div>
-<div *ngIf="topicos.length > 0">
-  <div *ngFor="let topico of topicos">
-    <a [routerLink]="['topico', topico.id]">
-      <span>topico.titulo</span>
-    </a>
+<div class="container">
+  <h2>Tópicos</h2>
+  <div *ngIf="topicos.length == 0">
+    <p>Nenhum tópico cadastrado!</p>
+    <p *ngIf="!usuario">Faça o login no sistema para cadastrar um tópico.</p>
+    <p *ngIf="usuario"><a class="btn btn-outline-primary btn-rounded" routerLink="/criartopico">Criar Tópico</a></p>
+  </div>
+  <div *ngIf="topicos.length > 0">
+    <div *ngFor="let topico of topicos">
+      <a [routerLink]="['topico', topico.id]">
+        <span>topico.titulo</span>
+      </a>
+    </div>
   </div>
 </div>

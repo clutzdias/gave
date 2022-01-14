@@ -7,6 +7,7 @@ import { LogsService } from './logs.service';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { Usuario } from '../interfaces/usuario';
+import { formatNumber } from '@angular/common';
 
 const CRIAR_TOPICO_ENDPOINT = 'topicos/criar'
 const LISTAR_TOPICOS = 'topicos'
@@ -29,12 +30,14 @@ export class ForumService {
 
   }
 
-  public addMensagem(id_topico:string, mensagem:Mensagem){
+  public addMensagem(id_topico:string, form: any){
     this.usuario = this.localDB.get(USUARIO_LOGADO_DB);
 
     const id = this.usuario ? this.usuario.id : '';
 
-    return this.http.post(BASE_API_URL + '/' + id +  '/' + MENSAGENS + '/' + id_topico, mensagem);
+    let dados: any = {"conteudo": form.value.conteudo}
+
+    return this.http.post(BASE_API_URL + '/' + id +  '/' + MENSAGENS + '/' + id_topico, dados);
 
   }
 
@@ -44,12 +47,15 @@ export class ForumService {
 
   }
 
-  public criarTopico(topico: Topico){
+  public criarTopico(form: any){
     this.usuario = this.localDB.get(USUARIO_LOGADO_DB);
 
     const id = this.usuario ? this.usuario.id : '';
 
-    return this.http.post(BASE_API_URL + '/' + id + '/' + CRIAR_TOPICO_ENDPOINT, topico);
+    let dados: any = {"titulo": form.value.titulo,
+                      "conteudo": form.value.conteudo}
+
+    return this.http.post(BASE_API_URL + id + '/' + CRIAR_TOPICO_ENDPOINT, dados);
 
   }
 

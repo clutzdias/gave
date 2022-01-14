@@ -14,13 +14,13 @@ import { ActivatedRoute } from '@angular/router';
 export class TopicoComponent implements OnInit {
 
   public mensagens: Mensagem[]
-  public usuario: Usuario
+
 
   constructor(private route: ActivatedRoute,
               private forumService: ForumService,
-              private localDB: LocalStorageService) {
+              ) {
     this.mensagens = [];
-    this.usuario = this.localDB.get(USUARIO_LOGADO_DB);
+
   }
 
   getMensagens(id_topico: string){

@@ -2,10 +2,7 @@ import { ForumService } from './../services/forum.service';
 import { ForumComponent } from './forum.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TopicoComponent } from './topico/topico.component';
-import { FormTopicoComponent } from './form-topico/form-topico.component';
 import { Routes, RouterModule } from '@angular/router';
-import { TopicoModule } from './topico/topico.module';
 
 const routes: Routes = [
   {
@@ -14,19 +11,22 @@ const routes: Routes = [
   },
   {
     path: 'topico',
-    loadChildren: () => import('./topico/topico.module').then(m => TopicoModule)
+    loadChildren: () => import('./topico/topico.module').then(m => m.TopicoModule)
   },
   {
     path: 'topico/:id',
-    loadChildren: () => import('./topico/topico.module').then(m => TopicoModule)
+    loadChildren: () => import('./topico/topico.module').then(m => m.TopicoModule)
+  },
+  {
+    path: 'criartopico',
+    loadChildren: () => import('./form-topico/form-topico.module').then(m => m.FormTopicoModule)
   }
 
 ]
 
 @NgModule({
   declarations: [
-    ForumComponent,
-    FormTopicoComponent
+    ForumComponent
   ],
   imports: [
     CommonModule,
