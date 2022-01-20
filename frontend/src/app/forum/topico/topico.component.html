@@ -1,1 +1,18 @@
-<p>topico works!</p>
+<!--Falta acrescentar a visualização do usuário criador das mensagens e da data de criação das mensagens. A interface (mensagem.ts) já está adequada-->
+
+<div class="container">
+  <h2>{{topico?.titulo}}</h2>
+  <p *ngFor="let mensagem of mensagens">{{mensagem.conteudo}}</p>
+  <div>
+    <form *ngIf="usuario" [formGroup]="formGroup" (ngSubmit)="addMensagem(formGroup)">
+      <div class="input-group mb-3">
+        <textarea class="form-control" id="conteudo" formControlName="conteudo" placeholder="Responda a este tópico" required></textarea>
+      </div>
+      <button class="btn btn-outline-danger btn-rounded" type="submit">Enviar mensagem</button>
+    </form>
+    <p *ngIf="!usuario">Faça o login para poder responder a esse tópico</p>
+
+  </div>
+</div>
+
+

@@ -63,9 +63,8 @@ class MensagensService {
                         ->join('usuarios', 'mensagens.usuario_criador', '=', 'usuarios.id')
                         ->select('mensagens.id',
                                 'mensagens.conteudo',
-                                'mensagens.usuario_criador',
                                 'mensagens.data',                               
-                                'usuarios.nome')
+                                'usuarios.nome as usuario')
                         ->where('mensagens.topico', '=', $id_topico);
         
         if($id_usuario != ''){

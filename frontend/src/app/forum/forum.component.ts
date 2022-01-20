@@ -1,3 +1,4 @@
+import { LISTA_TOPICOS } from './../const/genericConsts';
 import { Component, OnInit } from '@angular/core';
 import { USUARIO_LOGADO_DB } from '../const/genericConsts';
 import { Topico } from '../interfaces/topico';
@@ -24,7 +25,9 @@ export class ForumComponent implements OnInit {
 
   public getTopicos() {
     this.forumService.getTopicos()
-      .subscribe(dados => this.topicos = dados);
+      .subscribe(dados => {this.topicos = dados;
+                          this.localDB.set(LISTA_TOPICOS, dados)
+                          });
 
   }
 

@@ -1,3 +1,4 @@
+import { LISTA_TOPICOS } from './../const/genericConsts';
 import { USUARIO_LOGADO_DB, BASE_API_URL } from '../const/genericConsts';
 import { Injectable } from '@angular/core';
 import { Topico } from '../interfaces/topico';
@@ -37,13 +38,15 @@ export class ForumService {
 
     let dados: any = {"conteudo": form.value.conteudo}
 
-    return this.http.post(BASE_API_URL + '/' + id +  '/' + MENSAGENS + '/' + id_topico, dados);
+    const headers = {'Content-Type': 'application/json'}
+
+    return this.http.post(BASE_API_URL + id +  '/' + MENSAGENS + '/' + id_topico, dados, {headers});
 
   }
 
   public getMensagensPorTopico(id_topico:string): Observable<Mensagem[]>{
 
-    return this.http.get<Mensagem[]>(BASE_API_URL + '/' + id_topico + '/' + MENSAGENS);
+    return this.http.get<Mensagem[]>(BASE_API_URL + id_topico + '/' + MENSAGENS);
 
   }
 
@@ -56,6 +59,24 @@ export class ForumService {
                       "conteudo": form.value.conteudo}
 
     return this.http.post(BASE_API_URL + id + '/' + CRIAR_TOPICO_ENDPOINT, dados);
+
+  }
+
+  public getTopico(id_topico: string): any{
+    const topicos: Topico[] = this.localDB.get(LISTA_TOPICOS);
+
+    if (topicos.length > 0){
+      let dados = topicos.filter((t) => t.id == id_topico);
+
+      if (dados.length > 0){
+        return dados[0];
+      }else{
+        return null;
+      }
+
+    }else{
+      return null;
+    }
 
   }
 

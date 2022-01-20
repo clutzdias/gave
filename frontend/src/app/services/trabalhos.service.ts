@@ -22,7 +22,7 @@ export class TrabalhosService {
   public getTrabalhosPorUsuario(id: string, id_edital: string): Observable<Trabalho[]>{
 
     return this.http.get<Trabalho[]>(BASE_API_URL + id_edital + '/' + TRABALHOS_ENDPOINT + '/' + id);
-      
+
   }
 
   public getTrabalhosPorEdital(id_edital: string): Array<Trabalho>{
@@ -39,21 +39,16 @@ export class TrabalhosService {
     const id_imagem = this.getIdImagemDrive(form.value.conteudo);
     const url_imagem = URL_DRIVE + id_imagem;
 
-    console.log('id imagem');
-    console.log(id_imagem);
-    console.log('url'); 
-    console.log(url_imagem);
-
     formData.append('titulo', form.value.titulo);
     formData.append('tecnica', form.value.tecnica);
     formData.append('ano', form.value.ano);
     formData.append('resumo', form.value.resumo);
     formData.append('conteudo', url_imagem);
     formData.append('artista', usuario.id);
-    formData.append('edital', edital.id); 
+    formData.append('edital', edital.id);
 
     return this.http.post(BASE_API_URL + CRIAR_TRABALHOS_ENDPOINT, formData);
- 
+
   }
 
   private getIdImagemDrive(url: string): string {

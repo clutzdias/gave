@@ -31,7 +31,8 @@ class MensagensController extends Controller
             if ($resposta['success'] == 0){
                 return new JsonResponse($resposta['message'], 418);   
             } else {
-                return new JsonResponse($resposta['message'], 201);
+                $mensagem = $resposta['message'];
+                return new JsonResponse($mensagem, 201);
             }         
 
         }catch(Exception $e){

@@ -98,7 +98,7 @@ export class PaginausuarioComponent implements OnInit {
     if (this.perfilArtista){
       this.trabalhosService.getTrabalhosPorUsuario(id, id_edital)
         .subscribe(dados => this.trabalhosUsuario = dados);
-      console.log(this.trabalhosUsuario);
+
     } else if (this.perfilSelecionador){
       this.trabalhosEdital = this.trabalhosService.getTrabalhosPorEdital(id_edital);
     }
