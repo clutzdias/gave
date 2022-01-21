@@ -7,3 +7,26 @@
   width: 100px;
   height: 70px;
 }
+
+.lista-trabalhos-selecionador{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-trabalho{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //flex-direction: column;
+}
+
+mat-list-option{
+  height: 100px !important;
+  padding: 0;
+
+}
+
+.espaco{
+  margin: 15px;
+}

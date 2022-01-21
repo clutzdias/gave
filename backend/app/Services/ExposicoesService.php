@@ -40,12 +40,14 @@ class ExposicoesService {
 
     public function criarExposicao($data, $id_edital){
 
-        $exposicao = $this->getExposicaoPorEdital($id_edital);
+        $edital = $data['edital'];
+
+        $exposicao = $this->getExposicaoPorEdital($edital);
 
         if (count($exposicao) > 0){
             return [
                 'success' => 0,
-                'message' => 'JÃ¡ existe uma exposiÃ§Ã£o cadastrada para este edital'
+                'message' => 'Já existe uma exposição cadastrada para este edital'
             ];
         } else {
 
@@ -67,7 +69,7 @@ class ExposicoesService {
                 $exposicao = new Exposicao();
                 $trabalhos = $data['trabalhos'];
 
-                $exposicao->edital = $id_edital;
+                $exposicao->edital = $edital;
                 $exposicao->fill($data);
 
                 DB::beginTransaction();
@@ -78,7 +80,7 @@ class ExposicoesService {
                                 'titulo' => $exposicao->titulo,
                                 'data_inicio' => $exposicao->data_inicio,
                                 'data_fim' => $exposicao->data_fim,
-                                'edital' => $id_edital,
+                                'edital' => $edital,
                                 'curador' => $exposicao->curador]);
 
                     foreach($trabalhos as $trabalho_id){

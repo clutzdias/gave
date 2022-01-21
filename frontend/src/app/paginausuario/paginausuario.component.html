@@ -61,7 +61,7 @@
     </div>
 
     <div class="container" *ngIf="perfilSelecionador">
-      <form [formGroup]="formExposicaoGroup" (ngSubmit)="submitExposicao()">
+      <form [formGroup]="formExposicaoGroup" (ngSubmit)="submitExposicao(formExposicaoGroup)">
         <label for="titulo_exposicao">Título da Exposição</label>
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="titulo_exposicao" formControlName="titulo_exposicao" placeholder="Título da Exposição">
@@ -74,19 +74,23 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control" id="data_fim" formControlName="data_fim" placeholder="dd/mm/aaaa" onfocus="(this.type='date')">
         </div>
-        <div class="input-group mb-3">
-          <input type="submit">
-        </div>
 
         <mat-selection-list formControlName="trabalhos_selecionados">
-          <mat-list-option *ngFor="let trabalho of trabalhosEdital" [value]='trabalho.id' MatListOptionCheckboxPosition="after">
-            <div>
+          <mat-list-option *ngFor="let trabalho of trabalhosEdital" [value]='trabalho.id' MatListOptionCheckboxPosition="before">
+            <div class="lista-trabalhos-selecionador">
               <img class="imagem-selecionador" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
-              <p>T�tulo: {{trabalho.titulo}}</p>
-              <p>Artista: {{trabalho.artista}}</p>
+              <div class="info-trabalho">
+                <p>Título: {{trabalho.titulo}}<span class="espaco"></span></p>
+                <p>Artista: {{trabalho.artista}}<span class="espaco"></span></p>
+                <p>Ano: {{trabalho.ano}}<span class="espaco"></span></p>
+              </div>
             </div>
           </mat-list-option>
         </mat-selection-list>
+
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-primary btn-rounded" type="submit">Enviar</button>
+        </div>
       </form>
     </div>
 

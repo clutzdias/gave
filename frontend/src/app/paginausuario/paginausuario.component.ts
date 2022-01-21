@@ -100,8 +100,11 @@ export class PaginausuarioComponent implements OnInit {
         .subscribe(dados => this.trabalhosUsuario = dados);
 
     } else if (this.perfilSelecionador){
-      this.trabalhosEdital = this.trabalhosService.getTrabalhosPorEdital(id_edital);
+      this.trabalhosService.getTrabalhosPorEdital(id_edital)
+        .subscribe(dados => this.trabalhosEdital = dados);
     }
+
+    console.log("trabalhosEdital: " + this.trabalhosEdital.length);
   }
 
   private inicializarUsuario(){
@@ -136,9 +139,11 @@ export class PaginausuarioComponent implements OnInit {
     }
   }
 
-  public submitExposicao(){
+  public submitExposicao(form: any){
 
-    this.exposicoesService.criarExposicao(this.formExposicaoGroup)
+    console.log(form);
+
+    this.exposicoesService.criarExposicao(form)
       .subscribe(
         (res) => console.log(res), //Incluir lógica para redirecionar para o componente de exposição
         (err) => console.log(err)

@@ -38,14 +38,21 @@ export class ExposicoesService {
     const curador = this.localDB.get(USUARIO_LOGADO_DB);
     const edital = this.localDB.get(EDITAL_DB);
 
-    formData.append('titulo', form.titulo_exposicao);
+    let dados = {"titulo": form.value.titulo_exposicao,
+                 "data_inicio": form.value.data_inicio,
+                 "data_fim": form.value.data_fim,
+                 "edital": edital.id,
+                 "curador": curador.id,
+                 "trabalhos": form.value.trabalhos_selecionados}
+
+    /* formData.append('titulo', form.titulo_exposicao);
     formData.append('data_inicio', form.data_inicio);
     formData.append('data_fim', form.data_fim);
     formData.append('edital', edital);
     formData.append('curador', curador);
-    formData.append('trabalhos', form.trabalhos_selecionados);
+    formData.append('trabalhos', form.trabalhos_selecionados); */
 
-    return this.http.post(BASE_API_URL + '/' + edital + '/' + CRIAR_EXPOSICAO_ENDPOINT, formData);
+    return this.http.post(BASE_API_URL + edital + '/' + CRIAR_EXPOSICAO_ENDPOINT, dados);
 
   }
 

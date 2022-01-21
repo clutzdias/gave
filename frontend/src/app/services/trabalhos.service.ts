@@ -25,8 +25,9 @@ export class TrabalhosService {
 
   }
 
-  public getTrabalhosPorEdital(id_edital: string): Array<Trabalho>{
-    return [];
+  public getTrabalhosPorEdital(id_edital: string): Observable<Trabalho[]>{
+
+    return this.http.get<Trabalho[]>(BASE_API_URL + id_edital + '/' + TRABALHOS_ENDPOINT);
   }
 
   public enviarTrabalho(form: any): Observable<any>{

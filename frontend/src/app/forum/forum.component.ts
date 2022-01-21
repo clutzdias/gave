@@ -13,8 +13,8 @@ import { LocalStorageService } from '../services/local-storage.service';
 })
 export class ForumComponent implements OnInit {
 
-  public topicos: Topico[]
-  public usuario: Usuario
+  public topicos: Topico[];
+  public usuario: Usuario;
 
   constructor(private forumService: ForumService,
               private localDB: LocalStorageService) {
