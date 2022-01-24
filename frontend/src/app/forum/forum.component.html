@@ -6,12 +6,46 @@
     <p *ngIf="usuario"><a class="btn btn-outline-primary btn-rounded" routerLink="/criartopico">Criar Tópico</a></p>
   </div>
   <div *ngIf="topicos.length > 0">
+    <!--
     <div *ngFor="let topico of topicos">
       <a [routerLink]="['topico', topico.id]">
         <span>{{topico.titulo}}</span>
       </a>
+    </div>  -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Tópicos</h6>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Título</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let topico of topicos | paginate : { itemsPerPage: 3, currentPage: page }">
+                <td> <a [routerLink]="['topico', topico.id]">
+                    <span>{{topico.titulo}}</span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>
+                  Quantidade de tópicos: {{topicos.length}}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
     </div>
+
     <p *ngIf="!usuario">Faça o login no sistema para cadastrar um tópico.</p>
     <p *ngIf="usuario"><a class="btn btn-outline-primary btn-rounded" routerLink="/criartopico">Criar Tópico</a></p>
-  </div>
+  </div><!-- fim da div if topicos.length-->
 </div>

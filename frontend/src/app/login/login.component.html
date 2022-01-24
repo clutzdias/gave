@@ -1,4 +1,4 @@
-<div>
+<!--<div>
     <form [formGroup]="formGroup" novalidate (ngSubmit)="login(formGroup)">
         <p><label for="email">Email</label></p>
         <input type="email" id="email" formControlName="username" placeholder="seuemail@email.com">
@@ -6,4 +6,39 @@
         <input type="password" id="password" formControlName="password" placeholder="Senha">
         <p><button type="submit">Entrar</button></p>
     </form>
+</div>
+-->
+
+<div class="row justify-content-center">
+
+    <div class="col-xl-4 col-lg-4 col-md-4">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1><i class="fa fa-user-circle"></i></h1>
+                                <h1 class="h4 text-gray-900 mb-4">Acesso ao Sistema</h1>
+                            </div>
+                            <form [formGroup]="formGroup" novalidate (ngSubmit)="login(formGroup)">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" formControlName="username" placeholder="seuemail@email.com" class="form-control">
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label for="password">Senha</label>
+                                    <input type="password" id="password" formControlName="password" placeholder="Senha" class="form-control">
+                                </div>
+                                <br />
+                                <p><button type="submit" class="btn btn-primary btn-user btn-block">Entrar</button></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

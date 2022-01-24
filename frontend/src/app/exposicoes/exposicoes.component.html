@@ -1,5 +1,4 @@
-
-
+<!--
 <h2>Exposições</h2>
 <ul class="exposicoes">
     <li *ngFor="let exposicao of exposicoes"> 
@@ -14,7 +13,15 @@
 <br>
 <br>
 
-
-
-
-
+-->
+<div class="row">
+    <div class="col-md-6 mb-3 mt-5" *ngFor="let exposicao of exposicoes">
+        <div class="card">
+            <div class="card-body text-center">
+                <a [routerLink]="['exposicao', exposicao.id]">
+                    <span>Título: </span>{{ exposicao.titulo }} <br>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

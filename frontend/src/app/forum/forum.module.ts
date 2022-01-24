@@ -3,7 +3,7 @@ import { ForumComponent } from './forum.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 const routes: Routes = [
   {
     path: '',
@@ -30,6 +30,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    NgxPaginationModule,// biblioteca de paginação
     RouterModule.forChild(routes)
   ],
   providers: [

@@ -1,19 +1,21 @@
 <div class="container">
-  <h2>Criar Tópico</h2>
-  <form [formGroup]="formGroup" novalidate (ngSubmit)="enviar(formGroup)">
-      <fieldset [disabled]="enviando">
-          <label for="titulo">Título</label>
-          <div class="input-group mb-3">
-              <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Título do tópico" required>
-          </div>
-          <label for="conteudo">Mensagem</label>
-          <div class="input-group mb-3">
-              <textarea class="form-control" id="conteudo" formControlName="conteudo" placeholder="Escreva sua mensagem" required></textarea>
-          </div>
-          <div>
-              <button class="btn btn-outline-primary btn-rounded" type="submit">Enviar</button>
-              <button class="btn btn-outline-secondary btn-rounded" type="button" (click)="back()">Voltar</button>
-          </div>
-      </fieldset>
-  </form>
+    <h2>Criar Tópico</h2>
+    <form [formGroup]="formGroup" novalidate (ngSubmit)="enviar(formGroup)">
+        <fieldset [disabled]="enviando">
+            <label for="titulo">Título</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Título do tópico" required>
+            </div>
+            <label for="conteudo">Mensagem</label>
+            <div class="input-group mb-3">
+                <textarea class="form-control" id="conteudo" formControlName="conteudo" placeholder="Escreva sua mensagem" required></textarea>
+            </div>
+            <div>
+                <button class="btn btn-outline-primary btn-rounded" type="submit">Enviar</button>
+
+                
+                <button class="btn btn-outline-secondary btn-rounded" type="button" (click)="back()">Voltar</button>
+            </div>
+        </fieldset>
+    </form>
 </div>

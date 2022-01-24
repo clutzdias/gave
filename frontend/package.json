@@ -25,6 +25,7 @@
     "ajv-keywords": "^5.0.0",
     "material-design-icons": "^3.0.1",
     "mdb-angular-ui-kit": "^1.2.0",
+    "ngx-pagination": "^5.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

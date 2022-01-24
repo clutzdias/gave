@@ -1,10 +1,81 @@
-<div *ngIf="exposicao">
-    <h2>{{ exposicao.titulo | uppercase }}</h2>
-    <span>Edital: </span>{{ exposicao.edital.titulo }}<br>
-    <span>Curador: </span>{{ exposicao.curador }}<br>
-    <span>Data de início: </span>{{ exposicao.data_inicio | date : 'dd/MM/yyyy' }} <br>
-    <span>Data de término: </span>{{ exposicao.data_fim | date : 'dd/MM/yyyy' }} <br>
-    <div><button type="button" (click)="goBack()">Voltar</button></div>
+<div class="row justify-content-center">
+    <div class="col-xl-12 col-lg-8 col-md-8">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div *ngIf="exposicao">
+                            <h2>{{ exposicao.titulo | uppercase }}</h2>
+                            <table class="table table-sm table-bordered mt-3">
+                                <tbody>
+                                    <tr>
+                                        <td><span>Edital: </span></td>
+                                        <td>{{ exposicao.edital.titulo }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>Curador: </span></td>
+                                        <td>{{ exposicao.curador }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>Data de início: </span></td>
+                                        <td>{{ exposicao.data_inicio | date : 'dd/MM/yyyy' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span>Data de término: </span></td>
+                                        <td>{{ exposicao.data_fim | date : 'dd/MM/yyyy' }}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div>
+                                    <button type="button" (click)="goBack()" class="btn btn-primary">Voltar</button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
+<!--
+    
+<div class="row justify-content-center">
 
+    <div class="col-xl-4 col-lg-4 col-md-4">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1><i class="fa fa-user-circle"></i></h1>
+                                <h1 class="h4 text-gray-900 mb-4">Acesso ao Sistema</h1>
+                            </div>
+                            <form [formGroup]="formGroup" novalidate (ngSubmit)="login(formGroup)">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" formControlName="username" placeholder="seuemail@email.com" class="form-control">
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label for="password">Senha</label>
+                                    <input type="password" id="password" formControlName="password" placeholder="Senha" class="form-control">
+                                </div>
+                                <br />
+                                <p><button type="submit" class="btn btn-primary btn-user btn-block">Entrar</button></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->

@@ -1,7 +1,21 @@
-<h2>Últimas Exposições</h2>
+<!--<h2>Últimas Exposições</h2>
 <div class="exposicoes-menu">
     <a *ngFor="let exposicao of exposicoes"
         [routerLink]="['exposicao', exposicao.id]">
         {{ exposicao.titulo }}
     </a>
 </div>
+-->
+<header>
+    <div class="card-img-overlay">
+        <h1>Últimas Exposições</h1>
+        <h3 class="animated wow fadeIn">
+            Conheça as mais belas e criativas obras.
+        </h3>
+        <div class="row" style="justify-content: center;">
+            <a *ngFor="let exposicao of exposicoes" [routerLink]="['exposicao', exposicao.id]">
+                <button class="btn btn-outline-light btn-lg animated wow fadeInUp mt-3"> {{ exposicao.titulo }} </button>
+            </a>
+        </div>
+    </div>
+</header>

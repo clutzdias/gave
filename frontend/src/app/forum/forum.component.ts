@@ -12,12 +12,14 @@ import { LocalStorageService } from '../services/local-storage.service';
   styleUrls: ['./forum.component.scss']
 })
 export class ForumComponent implements OnInit {
-
+  //atributo para armazenar o numero da página
+  //que o usuario estiver navegando na paginação
+  page = 1;
   public topicos: Topico[];
   public usuario: Usuario;
 
   constructor(private forumService: ForumService,
-              private localDB: LocalStorageService) {
+    private localDB: LocalStorageService) {
 
     this.topicos = []
     this.usuario = this.localDB.get(USUARIO_LOGADO_DB);
@@ -25,13 +27,14 @@ export class ForumComponent implements OnInit {
 
   public getTopicos() {
     this.forumService.getTopicos()
-      .subscribe(dados => {this.topicos = dados;
-                          this.localDB.set(LISTA_TOPICOS, dados)
-                          });
+      .subscribe(dados => {
+        this.topicos = dados;
+        this.localDB.set(LISTA_TOPICOS, dados)
+      });
 
   }
 
-  public criarTopico(){
+  public criarTopico() {
     console.log('criar topico');
   }
 
@@ -39,5 +42,8 @@ export class ForumComponent implements OnInit {
     this.getTopicos();
 
   }
-
+  //função para realizar a paginaçao
+  handlePageChange(event: any): void {
+    this.page = event;
+  }
 }
