@@ -9,10 +9,6 @@
                             <table class="table table-sm table-bordered mt-3">
                                 <tbody>
                                     <tr>
-                                        <td><span>Edital: </span></td>
-                                        <td>{{ exposicao.edital.titulo }}</td>
-                                    </tr>
-                                    <tr>
                                         <td><span>Curador: </span></td>
                                         <td>{{ exposicao.curador }}</td>
                                     </tr>
@@ -27,6 +23,13 @@
 
                                 </tbody>
                             </table>
+                            <p>Trabalhos:</p>
+                            <div *ngFor="let trabalho of exposicao.trabalhos">
+                              <img class= "imagem-artista" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
+                              <p class="etiqueta">{{ trabalho.titulo }}</p>
+                              <p class="etiqueta">{{ trabalho.tecnica }}</p>
+                              <p class="etiqueta">{{ trabalho.ano }}</p>
+                            </div>
                             <div class="row">
                                 <div>
                                     <button type="button" (click)="goBack()" class="btn btn-primary">Voltar</button>
@@ -41,10 +44,9 @@
             </div>
         </div>
     </div>
-</div>
 
 <!--
-    
+
 <div class="row justify-content-center">
 
     <div class="col-xl-4 col-lg-4 col-md-4">

@@ -125,9 +125,13 @@ class ExposicoesService {
     public function getExposicoes(){
 
         $data = new DateTime('now');
-        return Exposicao::where('data_fim', '>=', $data)
-                        ->where('data_inicio', '<=', $data)
-                        ->get();
+
+        return DB::table('exposicoes')
+                ->select('*')
+                ->where('data_fim', '>=', $data)
+                ->where('data_inicio', '<=', $data)
+                ->get();
+
     }
 
     private function criaAssocArrayExposicao($record){
@@ -227,17 +231,19 @@ class ExposicoesService {
                     ->join('trabalhos', 'trabalhos.id', '=', 'trabalhosexposicoes.trabalho')
                     ->join('usuarios', 'usuarios.id', '=', 'trabalhosexposicoes.artista')
                     ->select('exposicoes.id',
+                            'exposicoes.edital',
                             'exposicoes.titulo',
                             'exposicoes.data_inicio',
                             'exposicoes.data_fim',
                             'exposicoes.curador',
+                            'trabalhos.id',
                             'trabalhos.conteudo',
                             'trabalhos.titulo',
                             'trabalhos.tecnica',
                             'trabalhos.ano',
                             'trabalhos.resumo',
                             'usuarios.nome')
-                    ->where('exposicao.id', '=', $id_exposicao);
+                    ->where('exposicoes.id', '=', $id_exposicao);
         
         $exposicaoRecords = $query->get();
         

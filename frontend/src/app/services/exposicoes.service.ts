@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Exposicao } from '../interfaces/exposicao';
-import { EXPOSICOES } from '../mocks/mock-exposicoes';
 import { Observable, of } from 'rxjs';
 import { LogsService } from './logs.service';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +7,7 @@ import { USUARIO_LOGADO_DB, EDITAL_DB, BASE_API_URL } from '../const/genericCons
 import { LocalStorageService } from './local-storage.service';
 
 const CRIAR_EXPOSICAO_ENDPOINT = 'exposicoes/criar'
+const EXPOSICOES_ENDPOINT = 'exposicoes'
 
 
 @Injectable({
@@ -20,15 +20,11 @@ export class ExposicoesService {
     private logsService: LogsService) { }
 
   public getExposicoes(): Observable<Exposicao[]>{
-    const exposicoes = of(EXPOSICOES);
-    this.logsService.add('ExposicoesService: recuperou exposições');
-    return exposicoes;
+    return this.http.get<Exposicao[]>(BASE_API_URL + EXPOSICOES_ENDPOINT);
   }
 
   public getExposicao(id: string): Observable<Exposicao>{
-    const exposicao = EXPOSICOES.find(e => e.id === id)!;
-    this.logsService.add(`ExposicoesService: recuperou exposicao id = ${id}`);
-    return of(exposicao);
+    return this.http.get<Exposicao>(BASE_API_URL + EXPOSICOES_ENDPOINT + '/' + id);
   }
 
   public criarExposicao(form: any): Observable<any>{

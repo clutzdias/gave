@@ -1,7 +1,7 @@
 import { Exposicao } from "../interfaces/exposicao";
 import { EDITAL } from "./mock-edital";
 
-
+/*
 export const EXPOSICOES : Exposicao[] = [
     {
         id: '1',
@@ -20,3 +20,4 @@ export const EXPOSICOES : Exposicao[] = [
         curador: 'Curador Padrão do Sistema'
     }
 ]
+ */
