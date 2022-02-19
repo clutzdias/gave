@@ -34,11 +34,10 @@ export class PaginausuarioComponent implements OnInit {
   public listaUsuarios: Usuario[] = [];
 
   constructor(private localDB: LocalStorageService,
-              private formBuilder: FormBuilder,
-              private router: Router,
-              private trabalhosService: TrabalhosService,
-              private exposicoesService: ExposicoesService)
-  {
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private trabalhosService: TrabalhosService,
+    private exposicoesService: ExposicoesService) {
     this.formGroup = this.formBuilder.group({
       titulo: ['', Validators.compose([Validators.required])],
       tecnica: ['', Validators.compose([Validators.required])],
@@ -56,22 +55,22 @@ export class PaginausuarioComponent implements OnInit {
 
   }
 
-  public excluirTrabalho(id: string){
+  public excluirTrabalho(id: string) {
 
   }
 
-  public entrar(){
+  public entrar() {
     this.router.navigate(['login']);
 
   }
 
-  public onSelectFile(event: any){
+  public onSelectFile(event: any) {
     if (event.target.files.length > 0) {
       this.file = event.target.files[0];
     }
   }
 
-  public enviar(form: any){
+  public enviar(form: any) {
 
     /* console.log(form);
 
@@ -91,15 +90,15 @@ export class PaginausuarioComponent implements OnInit {
 
   }
 
-  private fillTrabalhos(){
+  private fillTrabalhos() {
     const id = this.usuario ? this.usuario.id : '';
     const id_edital = this.edital ? this.edital.id : '';
 
-    if (this.perfilArtista){
+    if (this.perfilArtista) {
       this.trabalhosService.getTrabalhosPorUsuario(id, id_edital)
         .subscribe(dados => this.trabalhosUsuario = dados);
 
-    } else if (this.perfilSelecionador){
+    } else if (this.perfilSelecionador) {
       this.trabalhosService.getTrabalhosPorEdital(id_edital)
         .subscribe(dados => this.trabalhosEdital = dados);
     }
@@ -107,14 +106,16 @@ export class PaginausuarioComponent implements OnInit {
     console.log("trabalhosEdital: " + this.trabalhosEdital.length);
   }
 
-  private inicializarUsuario(){
+  private inicializarUsuario() {
 
     const usuario = this.localDB.get(USUARIO_LOGADO_DB);
 
-    if (usuario){
+    console.log(usuario);
+
+    if (usuario) {
       this.usuario = usuario;
 
-      switch(usuario.perfil){
+      switch (usuario.perfil) {
         case TipoPerfilUsuario.Artista: {
           this.perfilArtista = true;
           break;
@@ -139,18 +140,18 @@ export class PaginausuarioComponent implements OnInit {
     }
   }
 
-  public submitExposicao(form: any){
+  public submitExposicao(form: any) {
 
     console.log(form);
 
     this.exposicoesService.criarExposicao(form)
       .subscribe(
-        (res) => console.log(res), //Incluir lógica para redirecionar para o componente de exposição
+        (res) => console.log(res), //Incluir lï¿½gica para redirecionar para o componente de exposiï¿½ï¿½o
         (err) => console.log(err)
       );
   }
 
-  get trabalhosFormArray(){
+  get trabalhosFormArray() {
     return this.formExposicaoGroup.controls.trabalhos as FormArray;
   }
 
