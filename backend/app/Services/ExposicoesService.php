@@ -135,6 +135,27 @@ class ExposicoesService {
     }
 
     private function criaAssocArrayExposicao($record){
+/* 
+        DB::table('exposicoes')
+                    ->join('trabalhosexposicoes', 'exposicoes.id', '=', 'trabalhosexposicoes.exposicao')
+                    ->join('trabalhos', 'trabalhos.id', '=', 'trabalhosexposicoes.trabalho')
+                    ->join('usuarios', 'usuarios.id', '=', 'trabalhosexposicoes.artista')
+                    ->select(exposicoes.id,
+                            exposicoes.edital,
+                            exposicoes.titulo,
+                            exposicoes.data_inicio,
+                            exposicoes.data_fim,
+                            exposicoes.curador,
+                            trabalhos.id,
+                            trabalhos.conteudo,
+                            trabalhos.titulo,
+                            trabalhos.tecnica,
+                            trabalhos.ano,
+                            trabalhos.resumo,
+                            usuarios.nome)
+                    ->where('exposicoes.id', '=', $id_exposicao); */
+
+    
 
         $exposicao = array(
             'id' => null,
@@ -144,29 +165,25 @@ class ExposicoesService {
             'curador' => null
         );
 
-        if(!\is_array($record)){
-            return $exposicao;
+        if($record->id != ""){
+            $exposicao['id'] = $record->id;
         }
 
-        if(\array_key_exists('id', $record)){
-            $exposicao['id'] = $record['id'];
+        if($record->tituloexposicao != ""){
+            $exposicao['titulo'] = $record->tituloexposicao;
         }
 
-        if(\array_key_exists('titulo', $record)){
-            $exposicao['titulo'] = $record['titulo'];
+        if($record->data_inicio != ""){
+            $exposicao['data_inicio'] = $record->data_inicio;
         }
 
-        if(\array_key_exists('data_inicio', $record)){
-            $exposicao['data_inicio'] = $record['data_inicio'];
+        if($record->id != ""){
+            $exposicao['data_fim'] = $record->data_fim;
         }
 
-        if(\array_key_exists('data_fim', $record)){
-            $exposicao['data_fim'] = $record['data_fim'];
-        }
-
-        if(\array_key_exists('curador', $record)){
-            $curador = $this->getNomeCurador($record['curador']);
-            $exposicao['curador'] = $curador;
+        if($record->curador != ""){
+            $curador = $this->getNomeCurador($record->curador);
+            $exposicao['curador'] = $curador[0]->nome;
         }
 
         return $exposicao;
@@ -184,32 +201,28 @@ class ExposicoesService {
             'artista' => null
         );
 
-        if(!\is_array($record)){
-            return $trabalho;
+        if($record->titulotrabalho != ""){
+            $trabalho['titulo'] = $record->titulotrabalho;
         }
 
-        if(\array_key_exists('titulo', $record)){
-            $trabalho['titulo'] = $record['titulo'];
+        if($record->conteudo != ""){
+            $trabalho['conteudo'] = $record->conteudo;
         }
 
-        if(\array_key_exists('conteudo', $record)){
-            $trabalho['conteudo'] = $record['conteudo'];
+        if($record->tecnica != ""){
+            $trabalho['tecnica'] = $record->tecnica;
         }
 
-        if(\array_key_exists('tecnica', $record)){
-            $trabalho['tecnica'] = $record['tecnica'];
+        if($record->ano != ""){
+            $trabalho['ano'] = $record->ano;
         }
 
-        if(\array_key_exists('ano', $record)){
-            $trabalho['ano'] = $record['ano'];
+        if($record->resumo != ""){
+            $trabalho['resumo'] = $record->resumo;
         }
 
-        if(\array_key_exists('resumo', $record)){
-            $trabalho['resumo'] = $record['resumo'];
-        }
-
-        if(\array_key_exists('artista', $record)){
-            $trabalho['artista'] = $record['artista'];
+        if($record->artista != ""){
+            $trabalho['artista'] = $record->artista;
         }
 
         return $trabalho;
@@ -232,17 +245,17 @@ class ExposicoesService {
                     ->join('usuarios', 'usuarios.id', '=', 'trabalhosexposicoes.artista')
                     ->select('exposicoes.id',
                             'exposicoes.edital',
-                            'exposicoes.titulo',
+                            'exposicoes.titulo as tituloexposicao',
                             'exposicoes.data_inicio',
                             'exposicoes.data_fim',
                             'exposicoes.curador',
                             'trabalhos.id',
                             'trabalhos.conteudo',
-                            'trabalhos.titulo',
+                            'trabalhos.titulo as titulotrabalho',
                             'trabalhos.tecnica',
                             'trabalhos.ano',
                             'trabalhos.resumo',
-                            'usuarios.nome')
+                            'usuarios.nome as artista')
                     ->where('exposicoes.id', '=', $id_exposicao);
         
         $exposicaoRecords = $query->get();
@@ -260,6 +273,7 @@ class ExposicoesService {
             }
 
             $exposicao['trabalhos'][] = $this->criaAssocArrayTrabalho($record);
+
         }
 
         return $exposicao;
