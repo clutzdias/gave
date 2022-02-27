@@ -6,6 +6,7 @@ use App\Models\Trabalho;
 use App\Classes\Util;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use DateTime;
 
 class TrabalhosService {
 
@@ -120,6 +121,25 @@ class TrabalhosService {
                 'message' => 'Trabalho nao encontrado'
             ];
         } else {
+            $data_atual = new DateTime('now');
+
+            $data = $data_atual->format('Y-m-d');
+
+            $trabalhoExposicao = DB::table("trabalhosexposicoes")
+                                ->join('exposicoes', 'exposicoes.id', '=', 'trabalhosexposicoes.exposicao')
+                                ->select('trabalhosexposicoes.id')
+                                ->where('trabalhosexposicoes.trabalho', '=', $id_trabalho)
+                                ->where('exposicoes.data_fim', '>=', $data)
+                                ->where('exposicoes.data_inicio', '<=', $data);
+            
+            if ($trabalhoExposicao){
+                return [
+                    'success' => 0,
+                    'message' => 'O trabalho faz parte de uma exposicao ativa e nao pode ser excluido.'
+                ];
+
+            }
+
             if ($trabalho->artista != $id_usuario){
                 return [
                     'success' => 0,
@@ -129,7 +149,7 @@ class TrabalhosService {
                 $trabalho->delete();
                 return [
                     'success' => 1,
-                    'message' => 'Trabalho excluído com sucesso'
+                    'message' => 'Trabalho excluido com sucesso'
                 ];
             }
 

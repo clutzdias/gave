@@ -6,26 +6,59 @@
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="titulo" formControlName="titulo" placeholder="Título do trabalho" required>
             </div>
+            <div *ngIf="titulo?.invalid && (titulo?.dirty || titulo?.touched)" class="warning">
+              <div *ngIf="titulo?.errors?.['required']">
+                O título é obrigatório.
+              </div>
+            </div>
             <label for="tecnica">Técnica</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="tecnica" formControlName="tecnica" placeholder="Técnica do trabalho" required>
             </div>
+            <div *ngIf="tecnica?.invalid && (tecnica?.dirty || tecnica?.touched)" class="warning">
+              <div *ngIf="tecnica?.errors?.['required']">
+                A técnica é obrigatória.
+              </div>
+            </div>
             <label for="ano">Ano</label>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="ano" formControlName="ano" placeholder="Ano do trabalho" required>
+                <input type="number" class="form-control" id="ano" formControlName="ano" placeholder="Ano do trabalho" required>
+            </div>
+            <div *ngIf="ano?.invalid && (ano?.dirty || ano?.touched)" class="warning">
+              <div *ngIf="ano?.errors?.['required']">
+                O ano é obrigatório.
+              </div>
+              <div *ngIf="ano?.errors?.['max']">
+                O ano não pode ser superior ao ano atual.
+              </div>
+              <div *ngIf="ano?.errors?.['min']">
+                O ano não deve ser inferior a 1920.
+              </div>
             </div>
             <label for="resumo">Resumo</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="resumo" formControlName="resumo" placeholder="Resumo descritivo do trabalho" required>
             </div>
+            <div *ngIf="resumo?.invalid && (resumo?.dirty || resumo?.touched)" class="warning">
+              <div *ngIf="resumo?.errors?.['required']">
+                O resumo é obrigatório.
+              </div>
+            </div>
             <label for="conteudo">Arquivo</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="conteudo" formControlName="conteudo" placeholder="Informe a URL de localização do arquivo." required>
             </div>
+            <div *ngIf="conteudo?.invalid && (conteudo?.dirty || conteudo?.touched)" class="warning">
+              <div *ngIf="conteudo?.errors?.['required']">
+                A url da imagem é obrigatória.
+              </div>
+            </div>
 
             <div>
-                <button class="btn btn-outline-primary btn-rounded" type="submit">Enviar</button>
-                <button class="btn btn-outline-secondary btn-rounded" type="button" (click)="back()">Voltar</button>
+                <button class="btn btn-primary btn-user"
+                        type="submit"
+                        [disabled]="formGroup.invalid">Enviar</button>
+                <button class="btn btn-secondary btn-user" type="button" (click)="back()">Voltar</button>
             </div>
 
         </fieldset>

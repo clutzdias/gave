@@ -6,16 +6,25 @@
     </a>
 </div>
 -->
-<header>
+<!-- <header>
     <div class="card-img-overlay">
-        <h1>Últimas Exposições</h1>
-        <h3 class="animated wow fadeIn">
-            Conheça as mais belas e criativas obras.
-        </h3>
+
         <div class="row" style="justify-content: center;">
             <a *ngFor="let exposicao of exposicoes" [routerLink]="['exposicao', exposicao.id]">
                 <button class="btn btn-outline-light btn-lg animated wow fadeInUp mt-3"> {{ exposicao.titulo }} </button>
             </a>
         </div>
     </div>
-</header>
+</header> -->
+<div class="container mt-4">
+  <div class="row">
+    <div class="card" style="width: 18rem;" *ngFor="let exposicao of exposicoes">
+      <!-- <img src="..." class="card-img-top" alt="..."> -->
+      <div class="card-body">
+        <h5 class="card-title mb-4">{{ exposicao.titulo }}</h5>
+        <p class="card-text">Início: {{exposicao.data_inicio}}</p>
+        <a [routerLink]="['exposicao', exposicao.id]" class="btn btn-primary">Visitar</a>
+      </div>
+    </div>
+  </div>
+</div>

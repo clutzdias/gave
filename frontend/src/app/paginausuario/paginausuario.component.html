@@ -22,6 +22,10 @@
       <li>Estado: {{ usuario?.estado }}</li>
     </ul>
   </div>
+  <!-- Melhorar CSS da mensagem de avisos. Atualmente, nenhum css funcionando.-->
+  <div *ngIf="mensagemErro != ''" class="mensagens-avisos">
+    {{mensagemErro}}
+  </div>
   <!--Container de Perfil de Artista-->
   <div class="container" *ngIf="perfilArtista">
     <div class="d-flex flex-row mb-3" *ngIf="trabalhosUsuario.length > 0">
@@ -50,19 +54,57 @@
   <!--Fim do container de Perfil de Artista-->
 
   <!--Container de Perfil de Selecionador-->
-  <div class="container" *ngIf="perfilSelecionador">
+  <div class="container" *ngIf="perfilSelecionador && !alteracaoExposicao" >
     <form [formGroup]="formExposicaoGroup" (ngSubmit)="submitExposicao(formExposicaoGroup)">
       <label for="titulo_exposicao">Título da Exposição</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="titulo_exposicao" formControlName="titulo_exposicao" placeholder="Título da Exposição">
+        <input type="text" class="form-control" id="titulo_exposicao" formControlName="titulo_exposicao" placeholder="Título da Exposição" required>
+      </div>
+      <div *ngIf="titulo_exposicao?.invalid && (titulo_exposicao?.dirty || titulo_exposicao?.touched)" class="warning">
+        <div *ngIf="titulo_exposicao?.errors?.['required']">
+          O título é obrigatório.
+        </div>
+        <div *ngIf="titulo_exposicao?.errors?.['minlength']">
+          O título deve ter ao menos 3 caracteres.
+        </div>
       </div>
       <label for="data_inicio">Data de Início</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="data_inicio" formControlName="data_inicio" placeholder="dd/mm/aaaa" onfocus="(this.type='date')">
+        <input type="date"
+              class="form-control"
+              id="data_inicio"
+              formControlName="data_inicio"
+              placeholder="dd/mm/aaaa"
+              max="9999-12-31"
+              onfocus="(this.type='date')"
+              required>
+      </div>
+      <div *ngIf="data_inicio?.invalid && (data_inicio?.dirty || data_inicio?.touched)" class="warning">
+        <div *ngIf="data_inicio?.errors?.['required']">
+          A data de início é obrigatória
+        </div>
+        <div *ngIf="data_inicio?.errors?.dataValida">
+          A data de início é inválida
+        </div>
       </div>
       <label for="data_fim">Data de término</label>
       <div class="input-group mb-3">
-        <input type="text" class="form-control" id="data_fim" formControlName="data_fim" placeholder="dd/mm/aaaa" onfocus="(this.type='date')">
+        <input type="date"
+              class="form-control"
+              id="data_fim"
+              formControlName="data_fim"
+              placeholder="dd/mm/aaaa"
+              max="9999-12-31"
+              onfocus="(this.type='date')"
+              required>
+      </div>
+      <div *ngIf="data_fim?.invalid && (data_fim?.dirty || data_fim?.touched)" class="warning">
+        <div *ngIf="data_fim?.errors?.['required']">
+          A data de término é obrigatória
+        </div>
+        <div *ngIf="data_fim?.errors?.dataValida">
+          A data de término é inválida
+        </div>
       </div>
 
       <mat-selection-list formControlName="trabalhos_selecionados">
@@ -77,11 +119,24 @@
           </div>
         </mat-list-option>
       </mat-selection-list>
+      <div *ngIf="trabalhos_selecionados?.invalid && (trabalhos_selecionados?.dirty || trabalhos_selecionados?.touched)" class="warning">
+        <div *ngIf="trabalhos_selecionados?.errors?.['required']">
+          Selecione ao menos um trabalho para a exposição
+        </div>
+      </div>
 
       <div class="input-group mb-3">
-        <button class="btn btn-outline-primary btn-rounded" type="submit">Enviar</button>
+        <button class="btn btn-primary btn-user"
+                type="submit"
+                [disabled]="!formExposicaoGroup.valid">Enviar</button>
       </div>
     </form>
+  </div>
+  <div *ngIf="exposicaoAtual && alteracaoExposicao">
+  <button class="btn btn-primary btn-user"
+          type="button"
+          (click)="alterarExposicao()"
+          >Alterar Exposicao</button>
   </div>
   <!--Fim do Container de Perfil de Selecionador-->
 

@@ -21,13 +21,35 @@ export class FormTrabalhoComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router)
   {
+    const hoje = new Date;
+    const ano = hoje.getFullYear()
     this.formGroup = this.formBuilder.group({
       titulo: ['', Validators.compose([Validators.required])],
       tecnica: ['', Validators.compose([Validators.required])],
-      ano: ['', Validators.compose([Validators.required])],
+      ano: ['', Validators.compose([Validators.required, Validators.max(ano), Validators.min(1920)])],
       resumo: ['', Validators.compose([Validators.required])],
       conteudo: ['', Validators.compose([Validators.required])]
     });
+  }
+
+  get titulo(){
+    return this.formGroup.get('titulo');
+  }
+
+  get tecnica(){
+    return this.formGroup.get('tecnica');
+  }
+
+  get ano(){
+    return this.formGroup.get('ano');
+  }
+
+  get resumo(){
+    return this.formGroup.get('resumo');
+  }
+
+  get conteudo(){
+    return this.formGroup.get('conteudo');
   }
 
   public enviar(form: any){

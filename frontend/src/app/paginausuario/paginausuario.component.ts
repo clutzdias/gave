@@ -1,16 +1,17 @@
 import { ExposicoesService } from 'src/app/services/exposicoes.service';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSelectionListChange } from '@angular/material/list';
+import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EDITAL_DB, USUARIO_LOGADO_DB, USUARIOS_DB } from '../const/genericConsts';
 import { TipoPerfilUsuario } from '../enum/tipoperfilusuario';
 import { Edital } from '../interfaces/edital';
 import { Trabalho } from '../interfaces/trabalho';
 import { Usuario } from '../interfaces/usuario';
-import { USUARIOS } from '../mocks/mock-usuarios';
 import { LocalStorageService } from '../services/local-storage.service';
 import { TrabalhosService } from '../services/trabalhos.service';
+import * as moment from 'moment';
+import { Exposicao } from '../interfaces/exposicao';
+
 
 @Component({
   selector: 'app-paginausuario',
@@ -26,37 +27,91 @@ export class PaginausuarioComponent implements OnInit {
   public perfilAdministrador: boolean = false;
   public trabalhosUsuario: Trabalho[] = [];
   public trabalhosEdital: Trabalho[] = [];
-  public formGroup: FormGroup;
   public formExposicaoGroup: FormGroup;
   private file?: File;
   private edital?: Edital;
   private trabalhosSelecionados: Trabalho[] = [];
   public listaUsuarios: Usuario[] = [];
+  public mensagemErro: string = '';
+  public exposicaoAtual?: Exposicao;
+  private exposicoes: Exposicao[] = [];
+  public alteracaoExposicao: boolean = false;
 
   constructor(private localDB: LocalStorageService,
     private formBuilder: FormBuilder,
     private router: Router,
     private trabalhosService: TrabalhosService,
     private exposicoesService: ExposicoesService) {
-    this.formGroup = this.formBuilder.group({
-      titulo: ['', Validators.compose([Validators.required])],
-      tecnica: ['', Validators.compose([Validators.required])],
-      ano: ['', Validators.compose([Validators.required])],
-      resumo: ['', Validators.compose([Validators.required])],
-      conteudo: ['', Validators.compose([Validators.required])]
-    });
 
     this.formExposicaoGroup = this.formBuilder.group({
-      titulo_exposicao: ['', Validators.compose([Validators.required])],
-      data_inicio: ['', Validators.compose([Validators.required])],
-      data_fim: ['', Validators.compose([Validators.required])],
-      trabalhos_selecionados: ['', Validators.compose([Validators.required])]
+      titulo_exposicao: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+      data_inicio: [null, Validators.compose([Validators.required, this.dataValida])],
+      data_fim: [null, Validators.compose([Validators.required, this.dataValida])],
+      trabalhos_selecionados: [[], Validators.compose([Validators.required])]
     });
 
   }
 
+  get titulo_exposicao(){
+    return this.formExposicaoGroup.get('titulo_exposicao');
+  }
+
+  get data_inicio(){
+    return this.formExposicaoGroup.get('data_inicio');
+  }
+
+  get data_fim(){
+    return this.formExposicaoGroup.get('data_fim');
+  }
+
+  get trabalhos_selecionados(){
+    return this.formExposicaoGroup.get('trabalhos_selecionados');
+  }
+
+  //Este m�todo ainda precisa ser aprimorado, pois n�o est� fazendo todas as valida��es que deveria
+  dataValida(controle: FormControl) {
+    let result: ValidationErrors = {}
+
+    const [ano, mes, dia] = ['','','']
+
+    const data = controle.value;
+    if (data){
+      const [ano, mes, dia] = data.split('-');
+    }
+    const hoje = new Date();
+
+    let invalido = false
+    if (ano.length > 4){
+      invalido = true;
+    }
+    else{
+      invalido = moment(data, 'DD/MM/YYYY').isValid()
+    }
+
+    if (!invalido) return null
+
+    return {invalidDate: 'invalidDate'}
+  }
+
   public excluirTrabalho(id: string) {
 
+    console.log(this.exposicaoAtual);
+
+    if (this.exposicaoAtual){
+      let trabalho = this.exposicaoAtual.trabalhos.find(t => t.id = id)
+      if (trabalho){
+        this.mensagemErro = "Esse trabalho não pode ser excluído pois pertence a uma exposição atual."
+        return null
+      }
+    }
+
+    this.trabalhosService.excluirTrabalho(id)
+      .subscribe(
+        (res) => this.fillTrabalhos(),
+        (err) => this.mensagemErro = "Falha ao excluir trabalho"
+      );
+
+      return true
   }
 
   public entrar() {
@@ -106,6 +161,16 @@ export class PaginausuarioComponent implements OnInit {
     console.log("trabalhosEdital: " + this.trabalhosEdital.length);
   }
 
+  public habilitaBotaoEnvio(){
+    let retorno: boolean = false
+    if (!this.alteracaoExposicao){
+      retorno = this.formExposicaoGroup.valid
+    }else{
+      retorno = true
+    }
+    return retorno
+  }
+
   private inicializarUsuario() {
 
     const usuario = this.localDB.get(USUARIO_LOGADO_DB);
@@ -144,16 +209,55 @@ export class PaginausuarioComponent implements OnInit {
 
     console.log(form);
 
-    this.exposicoesService.criarExposicao(form)
+    if (!form.valid){
+      this.mensagemErro = "O formulário deve ter todos os campos preenchidos";
+      return false
+    }
+
+    if (!this.exposicaoAtual){
+      this.exposicoesService.criarExposicao(form)
       .subscribe(
         (res) => console.log(res), //Incluir l�gica para redirecionar para o componente de exposi��o
         (err) => console.log(err)
       );
+    } else {
+      const exposicao_id = this.exposicaoAtual ? this.exposicaoAtual.id : '';
+      this.exposicoesService.alterarExposicao(form, exposicao_id)
+      .subscribe(
+        (res) => this.mensagemErro = 'Exposição alterada com sucesso',
+        (err) => this.mensagemErro = 'Falha ao alterar dados de exposição'
+      );
+    }
+    return true
+
+  }
+
+  public alterarExposicao(){
+    this.alteracaoExposicao = false;
+    this.habilitaBotaoEnvio();
   }
 
   get trabalhosFormArray() {
     return this.formExposicaoGroup.controls.trabalhos as FormArray;
   }
+
+  private getExposicaoAtual(exposicoes: Exposicao[]){
+    this.exposicoesService.getExposicao(exposicoes[0].id)
+      .subscribe(dados => {
+        this.exposicaoAtual = dados;
+        this.alteracaoExposicao = true;
+        console.log('dentro do getexposicao');
+        console.log(this.exposicaoAtual);
+
+      });
+
+  }
+
+  /* private ultimaExposicao(exposicao){
+    const today = new Date;
+
+    return exposicao.data_inicio <= today && exposicao.data_fim <= today
+  } */
 
   ngOnInit(): void {
 
@@ -164,6 +268,24 @@ export class PaginausuarioComponent implements OnInit {
     this.inicializarUsuario();
 
     this.fillTrabalhos();
+
+    const today = new Date;
+
+    this.exposicoesService.getExposicoes()
+                        .subscribe(dados =>{
+                          this.exposicoes = dados;
+                          this.getExposicaoAtual(this.exposicoes);
+                        });
+
+
+
+
+    /* this.exposicaoAtual = this.exposicoes.find(e => {
+      (e.data_inicio <= today && e.data_fim>= today)
+    }) */
+
+
+
 
   }
 

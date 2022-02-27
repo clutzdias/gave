@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { EDITAL_DB, URL_DRIVE, USUARIO_LOGADO_DB } from '../const/genericConsts';
 import { BASE_API_URL } from '../const/genericConsts';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 const CRIAR_TRABALHOS_ENDPOINT: string = 'trabalhos/criar';
 const TRABALHOS_ENDPOINT: string = 'trabalhos';
@@ -65,4 +66,24 @@ export class TrabalhosService {
   public getTrabalho(id: string){
     return this.http.get<Trabalho>(BASE_API_URL + TRABALHOS_ENDPOINT + '/' + id);
   }
+
+  public excluirTrabalho(id: string){
+    const usuario = this.localDB.get(USUARIO_LOGADO_DB);
+    return this.http.delete(BASE_API_URL + TRABALHOS_ENDPOINT + '/' + usuario.id + '/excluir/' + id)
+            .pipe(catchError(this.handleError));
+  }
+
+  handleError(error){
+        let errorMessage = '';
+
+        if (error.error instanceof ErrorEvent){
+          errorMessage = `Error: $error.error.message`;
+        }else{
+          errorMessage = `Error Code: $error.statusnMessage: $error.message`;
+        };
+        console.log(errorMessage);
+        return throwError(errorMessage);
+  }
 }
+
+

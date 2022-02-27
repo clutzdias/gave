@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { LogsComponent } from './logs/logs.component';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -18,7 +17,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MdbFormsModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],

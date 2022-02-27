@@ -23,8 +23,8 @@
     "@fortawesome/fontawesome-free": "^5.15.4",
     "ajv": "^8.6.3",
     "ajv-keywords": "^5.0.0",
+    "bootstrap": "^5.1.3",
     "material-design-icons": "^3.0.1",
-    "mdb-angular-ui-kit": "^1.2.0",
     "ngx-pagination": "^5.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
@@ -43,6 +43,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "moment": "^2.29.1",
     "typescript": "~4.3.5"
   }
 }

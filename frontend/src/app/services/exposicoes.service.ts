@@ -52,4 +52,14 @@ export class ExposicoesService {
 
   }
 
+  public alterarExposicao(form: any, id_exposicao: string): Observable<any> {
+    let dados = {"titulo": form.value.titulo_exposicao,
+                 "data_inicio": form.value.data_inicio,
+                 "data_fim": form.value.data_fim,
+                 "trabalhos": form.value.trabalhos_selecionados}
+    return this.http.patch(BASE_API_URL + EXPOSICOES_ENDPOINT + '/' + id_exposicao, dados);
+  }
+
+
+
 }

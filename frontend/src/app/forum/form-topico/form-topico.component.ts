@@ -24,6 +24,15 @@ export class FormTopicoComponent implements OnInit {
     });
   }
 
+  get titulo(){
+    return this.formGroup.get('titulo');
+  }
+
+  get conteudo(){
+    return this.formGroup.get('tecnica');
+  }
+
+
   public enviar(form: FormGroup){
     console.log()
 

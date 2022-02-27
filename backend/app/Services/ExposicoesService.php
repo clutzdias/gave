@@ -300,7 +300,13 @@ class ExposicoesService {
         
             if($data['trabalhos']){
                 
-                $exposicao->save();
+                /* DB::table('exposicoes')
+                    ->update([
+                    'titulo' => $exposicao->titulo,
+                    'data_inicio' => $exposicao->data_inicio,
+                    'data_fim' => $exposicao->data_fim
+                    ])
+                    ->where(); */
 
                 DB::delete('delete from trabalhosexposicoes where exposicao = ?', [$id_exposicao]);
 

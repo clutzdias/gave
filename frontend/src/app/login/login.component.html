@@ -27,18 +27,33 @@
                                     <label for="email">Email</label>
                                     <input type="email" id="email" formControlName="username" placeholder="seuemail@email.com" class="form-control" />
                                 </div>
-
-
-
-                                
+                                <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="warning">
+                                  <div *ngIf="username?.errors?.['required']">
+                                    O email do usuário é obrigatório.
+                                  </div>
+                                </div>
                                 <br />
                                 <div class="form-group">
                                     <label for="password">Senha</label>
                                     <input type="password" id="password" formControlName="password" placeholder="Senha" class="form-control" required="true" />
                                 </div>
+                                <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="warning">
+                                  <div *ngIf="password?.errors?.['required']">
+                                    A senha de usuário é obrigatória.
+                                  </div>
+                                  <div *ngIf="password?.errors?.['minlength']">
+                                    A senha de usuário deve ter no mínimo 6 caracteres.
+                                  </div>
+                                  <div *ngIf="password?.errors?.['maxlength']">
+                                    A senha de usuário deve ter no máximo 8 caracteres.
+                                  </div>
+                                </div>
                                 <br />
                                 <p><button type="submit" class="btn btn-primary btn-user btn-block">Entrar</button></p>
                             </form>
+                            <div *ngIf="mensagemErro != ''" class="warning">
+                              {{mensagemErro}}
+                            </div>
                         </div>
                     </div>
                 </div>
