@@ -1,9 +1,12 @@
 .imagem-artista{
-  width: 600px;
-  height: 400px;
+  max-width: 600px;
+  max-height: 400px;
 }
 
 .etiqueta{
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
+}
+.borda{
+  border: 1px solid red;
 }

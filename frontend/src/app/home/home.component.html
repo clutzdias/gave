@@ -1,30 +1,18 @@
-<!--<h2>Últimas Exposições</h2>
-<div class="exposicoes-menu">
-    <a *ngFor="let exposicao of exposicoes"
-        [routerLink]="['exposicao', exposicao.id]">
-        {{ exposicao.titulo }}
-    </a>
-</div>
--->
-<!-- <header>
-    <div class="card-img-overlay">
-
-        <div class="row" style="justify-content: center;">
-            <a *ngFor="let exposicao of exposicoes" [routerLink]="['exposicao', exposicao.id]">
-                <button class="btn btn-outline-light btn-lg animated wow fadeInUp mt-3"> {{ exposicao.titulo }} </button>
-            </a>
-        </div>
-    </div>
-</header> -->
-<div class="container mt-4">
+<div class="container">
   <div class="row">
-    <div class="card" style="width: 18rem;" *ngFor="let exposicao of exposicoes">
-      <!-- <img src="..." class="card-img-top" alt="..."> -->
-      <div class="card-body">
-        <h5 class="card-title mb-4">{{ exposicao.titulo }}</h5>
-        <p class="card-text">Início: {{exposicao.data_inicio}}</p>
-        <a [routerLink]="['exposicao', exposicao.id]" class="btn btn-primary">Visitar</a>
-      </div>
-    </div>
+    <h1>GAVE</h1>
+    <h2>Galeria de Artes Virtual Estudantil</h2>
+    <p>Bem-vindos à GAVE! Aqui você encontra um espaço destinado a exposição de trabalhos de artes visuais, bem como a possibilidade de discutir sobre os trabalhos
+      expostos e outros assuntos relevantes em nosso fórum.
+    </p>
+    <p>Clique no botão abaixo para visitar as exposições mais recentes.</p>
+    <a routerLink="/exposicoes">Visitar exposições</a>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <h2>Visite nosso fórum</h2>
+    <p>Nele você poderá ver as mensagens e tópicos de discussão criados por nossos usuários.</p>
+    <a routerLink="/forum">Acessar fórum</a>
   </div>
 </div>

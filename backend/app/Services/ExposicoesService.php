@@ -47,7 +47,7 @@ class ExposicoesService {
         if (count($exposicao) > 0){
             return [
                 'success' => 0,
-                'message' => 'Já existe uma exposição cadastrada para este edital'
+                'message' => 'Jï¿½ existe uma exposiï¿½ï¿½o cadastrada para este edital'
             ];
         } else {
 
@@ -135,27 +135,6 @@ class ExposicoesService {
     }
 
     private function criaAssocArrayExposicao($record){
-/* 
-        DB::table('exposicoes')
-                    ->join('trabalhosexposicoes', 'exposicoes.id', '=', 'trabalhosexposicoes.exposicao')
-                    ->join('trabalhos', 'trabalhos.id', '=', 'trabalhosexposicoes.trabalho')
-                    ->join('usuarios', 'usuarios.id', '=', 'trabalhosexposicoes.artista')
-                    ->select(exposicoes.id,
-                            exposicoes.edital,
-                            exposicoes.titulo,
-                            exposicoes.data_inicio,
-                            exposicoes.data_fim,
-                            exposicoes.curador,
-                            trabalhos.id,
-                            trabalhos.conteudo,
-                            trabalhos.titulo,
-                            trabalhos.tecnica,
-                            trabalhos.ano,
-                            trabalhos.resumo,
-                            usuarios.nome)
-                    ->where('exposicoes.id', '=', $id_exposicao); */
-
-    
 
         $exposicao = array(
             'id' => null,
@@ -165,8 +144,8 @@ class ExposicoesService {
             'curador' => null
         );
 
-        if($record->id != ""){
-            $exposicao['id'] = $record->id;
+        if($record->id_exposicao != ""){
+            $exposicao['id'] = $record->id_exposicao;
         }
 
         if($record->tituloexposicao != ""){
@@ -177,7 +156,7 @@ class ExposicoesService {
             $exposicao['data_inicio'] = $record->data_inicio;
         }
 
-        if($record->id != ""){
+        if($record->data_fim != ""){
             $exposicao['data_fim'] = $record->data_fim;
         }
 
@@ -193,6 +172,7 @@ class ExposicoesService {
     private function criaAssocArrayTrabalho($record){
 
         $trabalho = array(
+            'id' => null,
             'titulo' => null,
             'conteudo' => null,
             'tecnica' => null,
@@ -200,6 +180,10 @@ class ExposicoesService {
             'resumo' => null,
             'artista' => null
         );
+
+        if($record->id_trabalho != ""){
+            $trabalho['id'] = $record->id_trabalho;
+        }
 
         if($record->titulotrabalho != ""){
             $trabalho['titulo'] = $record->titulotrabalho;
@@ -243,13 +227,13 @@ class ExposicoesService {
                     ->join('trabalhosexposicoes', 'exposicoes.id', '=', 'trabalhosexposicoes.exposicao')
                     ->join('trabalhos', 'trabalhos.id', '=', 'trabalhosexposicoes.trabalho')
                     ->join('usuarios', 'usuarios.id', '=', 'trabalhosexposicoes.artista')
-                    ->select('exposicoes.id',
+                    ->select('exposicoes.id as id_exposicao',
                             'exposicoes.edital',
                             'exposicoes.titulo as tituloexposicao',
                             'exposicoes.data_inicio',
                             'exposicoes.data_fim',
                             'exposicoes.curador',
-                            'trabalhos.id',
+                            'trabalhos.id as id_trabalho',
                             'trabalhos.conteudo',
                             'trabalhos.titulo as titulotrabalho',
                             'trabalhos.tecnica',
@@ -283,14 +267,19 @@ class ExposicoesService {
 
     public function alterarExposicao($data, $id_exposicao){
 
-        $exposicao = Exposicao::find($id_exposicao);
+        $dados = DB::table('exposicoes')
+                        ->select('*')
+                        ->where('id', '=', $id_exposicao)
+                        ->get();
 
-        if (!$exposicao){
+        if (!$dados){
             return [
                 'success' => 0,
                 'message' => 'Exposicao nao encontrada'
             ];
         }
+
+        $exposicao = new Exposicao();
 
         $exposicao->fill($data);
 
@@ -300,20 +289,25 @@ class ExposicoesService {
         
             if($data['trabalhos']){
                 
-                /* DB::table('exposicoes')
+                DB::table('exposicoes')
+                    ->where('id', '=', $id_exposicao)
                     ->update([
                     'titulo' => $exposicao->titulo,
                     'data_inicio' => $exposicao->data_inicio,
                     'data_fim' => $exposicao->data_fim
-                    ])
-                    ->where(); */
+                    ]);
 
                 DB::delete('delete from trabalhosexposicoes where exposicao = ?', [$id_exposicao]);
 
-                foreach($data['trabalhos'] as $trabalho){
+                foreach($data['trabalhos'] as $trabalho_id){
+                    
+                    $trabalho = Trabalho::find($trabalho_id);
+                    $id = Util::newGUID();
+
                     DB::table('trabalhosexposicoes')
-                    ->insert(['exposicao' => $exposicao->id,
-                            'trabalho' => $trabalho->id,
+                    ->insert(['id' => $id,
+                            'exposicao' => $id_exposicao,
+                            'trabalho' => $trabalho_id,
                             'artista' => $trabalho->artista]);
                 }
 
@@ -325,7 +319,15 @@ class ExposicoesService {
                 ];
 
             }else{
-                $exposicao->save();
+
+                DB::table('exposicoes')
+                    ->where('id', $id_exposicao)
+                    ->update([
+                    'titulo' => $exposicao->titulo,
+                    'data_inicio' => $exposicao->data_inicio,
+                    'data_fim' => $exposicao->data_fim
+                    ]);
+
                 DB::commit();
 
                 return [
@@ -338,7 +340,7 @@ class ExposicoesService {
             DB::rollBack();
             return [
                 'success' => 2,
-                'message' => 'Falha ao salvar alteracoes na exposicao'
+                'message' => $e->getMessage()
             ];
 
         }

@@ -28,15 +28,15 @@
   </div>
   <!--Container de Perfil de Artista-->
   <div class="container" *ngIf="perfilArtista">
+    <p>Trabalhos submetidos:</p>
     <div class="d-flex flex-row mb-3" *ngIf="trabalhosUsuario.length > 0">
-      <p>Trabalhos submetidos:</p>
       <div *ngFor="let trabalho of trabalhosUsuario" class="p-2">
         <div class="row">
-          <div class="card mb-4 shadow-sm">
+          <div class="card mb-4 shadow-sm card-borda">
             <div class="card-body">
-              <h1 class="card-title pricing-card-title">
-                <p>Titulo: {{ trabalho.titulo }}</p>
-              </h1>
+              <h3 class="card-title pricing-card-title">
+                {{ trabalho.titulo }}
+              </h3>
               <img class="imagem-artista" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
 
               <p>Técnica: {{ trabalho.tecnica }}</p>
@@ -46,14 +46,26 @@
           </div>
         </div>
       </div>
-      <div>
-        <a class="btn btn-outline-primary btn-rounded" routerLink="/trabalhoedit">Adicionar Trabalho</a>
-      </div>
+    </div>
+    <div>
+      <a class="btn btn-outline-primary btn-rounded" routerLink="/trabalhoedit">Adicionar Trabalho</a>
     </div>
   </div>
   <!--Fim do container de Perfil de Artista-->
 
   <!--Container de Perfil de Selecionador-->
+  <div class="card-body" *ngIf="exposicaoAtual && alteracaoExposicao && perfilSelecionador">
+    <h3>Dados da exposição atual</h3>
+    <p>Título da exposição: {{ exposicaoAtual.titulo }}</p>
+    <p>Curador: {{ exposicaoAtual.curador }}</p>
+    <p>Data de início: {{ exposicaoAtual.data_inicio | date : 'dd/MM/yyyy' }}</p>
+    <p>Data de término: {{ exposicaoAtual.data_fim| date : 'dd/MM/yyyy' }}</p>
+    <button class="btn btn-primary btn-user"
+            type="button"
+            (click)="alterarExposicao()"
+            >Alterar Exposicao
+    </button>
+    </div>
   <div class="container" *ngIf="perfilSelecionador && !alteracaoExposicao" >
     <form [formGroup]="formExposicaoGroup" (ngSubmit)="submitExposicao(formExposicaoGroup)">
       <label for="titulo_exposicao">Título da Exposição</label>
@@ -107,18 +119,22 @@
         </div>
       </div>
 
-      <mat-selection-list formControlName="trabalhos_selecionados">
-        <mat-list-option *ngFor="let trabalho of trabalhosEdital" [value]='trabalho.id' MatListOptionCheckboxPosition="before">
-          <div class="lista-trabalhos-selecionador">
-            <img class="imagem-selecionador" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
-            <div class="info-trabalho">
-              <p>Título: {{trabalho.titulo}}<span class="espaco"></span></p>
-              <p>Artista: {{trabalho.artista}}<span class="espaco"></span></p>
-              <p>Ano: {{trabalho.ano}}<span class="espaco"></span></p>
+      <div class="lista-trabalhos">
+        <p>Selecione os trabalhos para a exposição</p>
+        <mat-selection-list formControlName="trabalhos_selecionados">
+          <mat-list-option *ngFor="let trabalho of trabalhosEdital" [value]='trabalho.id' MatListOptionCheckboxPosition="before">
+            <div class="lista-trabalhos-selecionador">
+              <img class="imagem-selecionador" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
+              <div class="info-trabalho">
+                <p>Título: {{trabalho.titulo}}<span class="espaco"></span></p>
+                <p>Artista: {{trabalho.artista}}<span class="espaco"></span></p>
+                <p>Ano: {{trabalho.ano}}<span class="espaco"></span></p>
+              </div>
             </div>
-          </div>
-        </mat-list-option>
-      </mat-selection-list>
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+
       <div *ngIf="trabalhos_selecionados?.invalid && (trabalhos_selecionados?.dirty || trabalhos_selecionados?.touched)" class="warning">
         <div *ngIf="trabalhos_selecionados?.errors?.['required']">
           Selecione ao menos um trabalho para a exposição
@@ -131,13 +147,9 @@
                 [disabled]="!formExposicaoGroup.valid">Enviar</button>
       </div>
     </form>
+
   </div>
-  <div *ngIf="exposicaoAtual && alteracaoExposicao">
-  <button class="btn btn-primary btn-user"
-          type="button"
-          (click)="alterarExposicao()"
-          >Alterar Exposicao</button>
-  </div>
+
   <!--Fim do Container de Perfil de Selecionador-->
 
   <div class="container" *ngIf="perfilAdministrador">

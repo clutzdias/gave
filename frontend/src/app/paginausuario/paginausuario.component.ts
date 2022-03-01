@@ -207,8 +207,6 @@ export class PaginausuarioComponent implements OnInit {
 
   public submitExposicao(form: any) {
 
-    console.log(form);
-
     if (!form.valid){
       this.mensagemErro = "O formulário deve ter todos os campos preenchidos";
       return false
@@ -222,9 +220,16 @@ export class PaginausuarioComponent implements OnInit {
       );
     } else {
       const exposicao_id = this.exposicaoAtual ? this.exposicaoAtual.id : '';
+      console.log(exposicao_id);
       this.exposicoesService.alterarExposicao(form, exposicao_id)
       .subscribe(
-        (res) => this.mensagemErro = 'Exposição alterada com sucesso',
+        (res) => {
+          this.exposicoesService.getExposicao(exposicao_id)
+            .subscribe(dados => this.exposicaoAtual = dados);
+          this.alteracaoExposicao = true;
+          this.mensagemErro = 'Exposição alterada com sucesso'
+
+        },
         (err) => this.mensagemErro = 'Falha ao alterar dados de exposição'
       );
     }

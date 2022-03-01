@@ -1,7 +1,7 @@
 <!--
 <h2>Exposições</h2>
 <ul class="exposicoes">
-    <li *ngFor="let exposicao of exposicoes"> 
+    <li *ngFor="let exposicao of exposicoes">
         <a [routerLink]="['exposicao', exposicao.id]">
             <span>Título: </span>{{ exposicao.titulo }} <br>
         </a>
@@ -14,7 +14,7 @@
 <br>
 
 -->
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-6 mb-3 mt-5" *ngFor="let exposicao of exposicoes">
         <div class="card">
             <div class="card-body text-center">
@@ -24,4 +24,17 @@
             </div>
         </div>
     </div>
+</div> -->
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="card" style="width: 18rem;" *ngFor="let exposicao of exposicoes">
+      <!-- <img src="..." class="card-img-top" alt="..."> -->
+      <div class="card-body">
+        <h5 class="card-title mb-4">{{ exposicao.titulo }}</h5>
+        <p class="card-text">Início: {{exposicao.data_inicio}}</p>
+        <a [routerLink]="['exposicao', exposicao.id]" class="btn btn-primary">Visitar</a>
+      </div>
+    </div>
+  </div>
 </div>

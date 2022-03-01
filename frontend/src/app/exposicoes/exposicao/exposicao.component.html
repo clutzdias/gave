@@ -1,4 +1,4 @@
-<div class="row justify-content-center">
+<!-- <div class="row justify-content-center">
     <div class="col-xl-12 col-lg-8 col-md-8">
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body">
@@ -81,3 +81,37 @@
     </div>
 </div>
 -->
+
+<div class="container" *ngIf="exposicao">
+  <div class="row">
+    <h2>{{ exposicao.titulo | uppercase }}</h2>
+
+    <h4>Curador: {{ exposicao.curador }}</h4>
+    <p>Início: {{ exposicao.data_inicio | date : 'dd/MM/yyyy' }}</p>
+    <p>Término: {{ exposicao.data_fim | date : 'dd/MM/yyyy' }}</p>
+    <p>Trabalhos:</p>
+    <!-- <div *ngFor="let trabalho of exposicao.trabalhos">
+      <img class= "imagem-artista" src="{{trabalho.conteudo}}" alt="{{trabalho.resumo}}">
+      <p class="etiqueta">{{ trabalho.titulo }}</p>
+      <p class="etiqueta">{{ trabalho.tecnica }}</p>
+      <p class="etiqueta">{{ trabalho.ano }}</p>
+    </div> -->
+
+    <div class="card mb-3" style="max-width: 600px;" *ngFor="let trabalho of exposicao.trabalhos">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{trabalho.conteudo}}" class="img-fluid rounded-start" alt="{{trabalho.resumo}}">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ trabalho.titulo }}</h5>
+            <p class="card-text">{{ trabalho.artista }}</p>
+            <p class="card-text">{{ trabalho.tecnica }}</p>
+            <p class="card-text">{{ trabalho.ano }}</p>
+          </div>
+        </div>
+    </div>
+  </div>
+
+</div>
+<button type="button" (click)="goBack()" class="btn btn-primary">Voltar</button>
