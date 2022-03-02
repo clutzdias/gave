@@ -45,11 +45,14 @@ export class TopicoComponent implements OnInit {
   public addMensagem(form: any){
     this.forumService.addMensagem(this.id_topico, form)
       .subscribe(
-        (res) => this.getMensagens(this.id_topico),
+        (res) => {
+          this.getMensagens(this.id_topico);
+
+        },
         (err) => {console.log(err),
                   this.getMensagens(this.id_topico)}
       );
-    console.log('qtde mensagens:' + this.mensagens.length)
+      form.reset();
 
   }
 

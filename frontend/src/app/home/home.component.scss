@@ -1,33 +1,12 @@
-/* header{
-  background-image: url('https://images.unsplash.com/photo-1514195037031-83d60ed3b448?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80');
-  background-repeat: no-repeat;
-  background-position: center center;
-  position: relative;
-  height: 600px;
-  background-size: 100%;
-}
-
-h1{
-  font-size: 100px;
-  color:#fff;
-  text-shadow: 5px 5px 5px #000;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 200px;
-}
-
-h3{
-  color: #fff;
-  text-shadow: 5px 5px 5px #000;
-  font-weight:  bold;
-  text-align: center;
-}
-a{
-  text-align: center;
-}
- */
-
-body {
-  background-image: url('https://images.unsplash.com/photo-1514195037031-83d60ed3b448?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80');
+.intro{
+  height: 50vh;
+  background-color: #b5b5b5;
 
 }
+
+.chamada-forum{
+  height: 50vh;
+  background-color: #454545;
+  color: white;
+}
+

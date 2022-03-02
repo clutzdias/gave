@@ -51,9 +51,11 @@
                                 <br />
                                 <p><button type="submit" class="btn btn-primary btn-user btn-block">Entrar</button></p>
                             </form>
+
                             <div *ngIf="mensagemErro != ''" class="warning">
                               {{mensagemErro}}
                             </div>
+                            <small>Não tem cadastro? Entre em contato com <em>administrador@email.com</em></small>
                         </div>
                     </div>
                 </div>

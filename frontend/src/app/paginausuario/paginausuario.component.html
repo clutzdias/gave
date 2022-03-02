@@ -1,6 +1,6 @@
-<div *ngIf="!usuario">
+<div class="container" *ngIf="!usuario">
   <p>Você ainda não logou no sistema.</p>
-  <button (click)="entrar()">Entrar</button>
+  <button class="btn btn-primary btn-user" (click)="entrar()">Entrar</button>
 </div>
 
 <div class="container" *ngIf="usuario">
@@ -22,8 +22,8 @@
       <li>Estado: {{ usuario?.estado }}</li>
     </ul>
   </div>
-  <!-- Melhorar CSS da mensagem de avisos. Atualmente, nenhum css funcionando.-->
-  <div *ngIf="mensagemErro != ''" class="mensagens-avisos">
+  <!-- Melhorar CSS da mensagem de avisos.-->
+  <div *ngIf="mensagemErro != ''" class="container mensagens-avisos">
     {{mensagemErro}}
   </div>
   <!--Container de Perfil de Artista-->

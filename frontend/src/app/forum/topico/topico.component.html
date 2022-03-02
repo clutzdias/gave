@@ -5,15 +5,21 @@
 
 <div class="container">
   <h2>{{topico?.titulo}}</h2>
-  <p *ngFor="let mensagem of mensagens">{{mensagem.conteudo}}</p>
+  <div *ngFor="let mensagem of mensagens" class="card-mensagem">
+    <p> {{mensagem.conteudo}}</p>
+    <div class="card-autor-data">
+      <small> Autor: {{mensagem.usuario}}</small>
+      <small> Data: {{mensagem.data | date : 'dd/MM/yyyy'}}</small>
+    </div>
+  </div>
   <div>
     <form *ngIf="usuario" [formGroup]="formGroup" (ngSubmit)="addMensagem(formGroup)">
       <div class="input-group mb-3">
         <textarea class="form-control" id="conteudo" formControlName="conteudo" placeholder="Responda a este tópico" required></textarea>
       </div>
-      <button class="btn btn-outline-danger btn-rounded" type="submit">Enviar mensagem</button>
+      <button class="btn btn-primary btn-user" type="submit">Enviar mensagem</button>
     </form>
-    <p *ngIf="!usuario">Faça o login para poder responder a esse tópico!!!</p>
+    <p *ngIf="!usuario">Faça o login para poder responder a esse tópico.</p>
 
   </div>
 </div>
