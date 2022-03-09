@@ -29,7 +29,7 @@ export class FormTopicoComponent implements OnInit {
   }
 
   get conteudo(){
-    return this.formGroup.get('tecnica');
+    return this.formGroup.get('conteudo');
   }
 
 

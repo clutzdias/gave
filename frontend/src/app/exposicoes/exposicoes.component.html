@@ -25,6 +25,16 @@
         </div>
     </div>
 </div> -->
+<div class="container mt-4 ms-4" *ngIf="exposicoes.length == 0">
+  <div class="row">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title mb-4">Nenhuma exposição aberta no momento!</h5>
+        <a routerLink="/home" class="btn btn-secondary">Voltar</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container mt-4">
   <div class="row">

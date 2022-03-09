@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { USUARIO_LOGADO_DB } from './../../const/genericConsts';
 import { LocalStorageService } from './../../services/local-storage.service';
 import { Usuario } from './../../interfaces/usuario';
@@ -20,6 +20,7 @@ export class TopicoComponent implements OnInit {
   public topico?: Topico;
   public usuario: Usuario
   public formGroup: FormGroup;
+  public formMensagem: FormGroup;
 
   constructor(private route: ActivatedRoute,
               private forumService: ForumService,
@@ -32,7 +33,11 @@ export class TopicoComponent implements OnInit {
       titulo: ['', Validators.compose([Validators.required])],
       conteudo: ['', Validators.compose([Validators.required])]
     });
-    this.id_topico = ""
+    this.id_topico = "";
+
+    this.formMensagem = this.formBuilder.group({
+      conteudo: ['', Validators.compose([Validators.required])]
+    });
 
   }
 
@@ -40,6 +45,10 @@ export class TopicoComponent implements OnInit {
     this.forumService.getMensagensPorTopico(id_topico)
       .subscribe(dados => this.mensagens = dados)
 
+  }
+
+  get conteudo(){
+    return this.formGroup.get('conteudo');
   }
 
   public addMensagem(form: any){

@@ -95,7 +95,7 @@ export class PaginausuarioComponent implements OnInit {
 
   public excluirTrabalho(id: string) {
 
-    console.log(this.exposicaoAtual);
+    //console.log(this.exposicaoAtual);
 
     if (this.exposicaoAtual){
       let trabalho = this.exposicaoAtual.trabalhos.find(t => t.id = id)
@@ -215,7 +215,8 @@ export class PaginausuarioComponent implements OnInit {
     if (!this.exposicaoAtual){
       this.exposicoesService.criarExposicao(form)
       .subscribe(
-        (res) => console.log(res), //Incluir l�gica para redirecionar para o componente de exposi��o
+        (res) => {this.mensagemErro = 'Exposição criada com sucesso';
+                  this.router.navigate(['/exposicoes'])}, //Incluir l�gica para redirecionar para o componente de exposi��o
         (err) => console.log(err)
       );
     } else {
@@ -247,7 +248,8 @@ export class PaginausuarioComponent implements OnInit {
   }
 
   private getExposicaoAtual(exposicoes: Exposicao[]){
-    this.exposicoesService.getExposicao(exposicoes[0].id)
+    if (exposicoes){
+      this.exposicoesService.getExposicao(exposicoes[0].id)
       .subscribe(dados => {
         this.exposicaoAtual = dados;
         this.alteracaoExposicao = true;
@@ -255,6 +257,7 @@ export class PaginausuarioComponent implements OnInit {
         console.log(this.exposicaoAtual);
 
       });
+    }
 
   }
 

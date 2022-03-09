@@ -13,11 +13,16 @@
     </div>
   </div>
   <div>
-    <form *ngIf="usuario" [formGroup]="formGroup" (ngSubmit)="addMensagem(formGroup)">
+    <form *ngIf="usuario" [formGroup]="formMensagem" (ngSubmit)="addMensagem(formMensagem)">
       <div class="input-group mb-3">
         <textarea class="form-control" id="conteudo" formControlName="conteudo" placeholder="Responda a este tópico" required></textarea>
+        <div *ngIf="conteudo?.invalid && (conteudo?.dirty || conteudo?.touched)" class="warning">
+          <div *ngIf="conteudo?.errors?.['required']">
+            É obrigatório informar uma mensagem para o tópico.
+          </div>
+        </div>
       </div>
-      <button class="btn btn-primary btn-user" type="submit">Enviar mensagem</button>
+      <button class="btn btn-primary btn-user" type="submit" [disabled]="!formMensagem.valid">Enviar mensagem</button>
     </form>
     <p *ngIf="!usuario">Faça o login para poder responder a esse tópico.</p>
 

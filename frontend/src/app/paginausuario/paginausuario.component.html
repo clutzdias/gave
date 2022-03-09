@@ -28,7 +28,8 @@
   </div>
   <!--Container de Perfil de Artista-->
   <div class="container" *ngIf="perfilArtista">
-    <p>Trabalhos submetidos:</p>
+    <p *ngIf="trabalhosUsuario.length == 0">Você ainda não enviou nenhum trabalho.</p>
+    <p *ngIf="trabalhosUsuario.length > 0">Trabalhos submetidos:</p>
     <div class="d-flex flex-row mb-3" *ngIf="trabalhosUsuario.length > 0">
       <div *ngFor="let trabalho of trabalhosUsuario" class="p-2">
         <div class="row">
@@ -41,14 +42,14 @@
 
               <p>Técnica: {{ trabalho.tecnica }}</p>
               <p>Ano: {{ trabalho.ano }}</p>
-              <button class="btn btn-outline-danger btn-rounded" type="button" (click)="excluirTrabalho(trabalho.id)">Excluir</button>
+              <button class="btn btn-danger" type="button" (click)="excluirTrabalho(trabalho.id)">Excluir</button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div>
-      <a class="btn btn-outline-primary btn-rounded" routerLink="/trabalhoedit">Adicionar Trabalho</a>
+      <a class="btn btn-primary" routerLink="/trabalhoedit">Adicionar Trabalho</a>
     </div>
   </div>
   <!--Fim do container de Perfil de Artista-->
@@ -120,7 +121,7 @@
       </div>
 
       <div class="lista-trabalhos">
-        <p>Selecione os trabalhos para a exposição</p>
+        <p class="selecao-trabalhos">Selecione os trabalhos para a exposição</p>
         <mat-selection-list formControlName="trabalhos_selecionados">
           <mat-list-option *ngFor="let trabalho of trabalhosEdital" [value]='trabalho.id' MatListOptionCheckboxPosition="before">
             <div class="lista-trabalhos-selecionador">

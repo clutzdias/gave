@@ -130,9 +130,10 @@ class TrabalhosService {
                                 ->select('trabalhosexposicoes.id')
                                 ->where('trabalhosexposicoes.trabalho', '=', $id_trabalho)
                                 ->where('exposicoes.data_fim', '>=', $data)
-                                ->where('exposicoes.data_inicio', '<=', $data);
+                                ->where('exposicoes.data_inicio', '<=', $data)
+                                ->get();
             
-            if ($trabalhoExposicao){
+            if (count($trabalhoExposicao) > 0){
                 return [
                     'success' => 0,
                     'message' => 'O trabalho faz parte de uma exposicao ativa e nao pode ser excluido.'
