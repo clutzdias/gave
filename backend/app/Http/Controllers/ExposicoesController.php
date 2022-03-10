@@ -91,4 +91,20 @@ class ExposicoesController extends Controller
         }
 
     }
+
+    public function getExposicaoPorEdital($id_edital){
+
+        try{
+
+            $exposicao = $this->getService()->getExposicaoPorEdital($id_edital);
+
+            return new JsonResponse($exposicao, 200);
+            
+
+        }catch(Exception $e){
+            return new JsonResponse($e->getMessage(), 500);
+
+        }
+
+    }
 }

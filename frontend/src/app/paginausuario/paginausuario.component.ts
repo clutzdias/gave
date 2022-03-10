@@ -36,6 +36,7 @@ export class PaginausuarioComponent implements OnInit {
   public exposicaoAtual?: Exposicao;
   private exposicoes: Exposicao[] = [];
   public alteracaoExposicao: boolean = false;
+  private idExposicaoEditalAtual?: string;
 
   constructor(private localDB: LocalStorageService,
     private formBuilder: FormBuilder,
@@ -248,17 +249,39 @@ export class PaginausuarioComponent implements OnInit {
   }
 
   private getExposicaoAtual(exposicoes: Exposicao[]){
-    if (exposicoes){
+
+    if (exposicoes.length > 0){
       this.exposicoesService.getExposicao(exposicoes[0].id)
-      .subscribe(dados => {
-        this.exposicaoAtual = dados;
-        this.alteracaoExposicao = true;
-        console.log('dentro do getexposicao');
-        console.log(this.exposicaoAtual);
+      .subscribe(
+        (dados) => {
+          this.exposicaoAtual = dados;
+          this.alteracaoExposicao = true;
+          console.log('dentro do getexposicao');
+          console.log(this.exposicaoAtual);
 
-      });
+        },
+        (err) => this.mensagemErro = err
+      );
+    } else {
+      const id_edital = this.edital ? this.edital.id : '';
+      this.exposicoesService.getExposicaoPorEdital(id_edital)
+        .subscribe((dados) => {
+          if (dados.length > 0){
+            this.exposicoesService.getExposicao(dados[0].id)
+              .subscribe((dados) => {
+                this.exposicaoAtual = dados;
+                this.alteracaoExposicao = true;
+                console.log('dentro do getexposicao');
+                console.log(this.exposicaoAtual);
+
+              },
+              (err) => this.mensagemErro = err
+              )
+          }
+        },
+          (err) => this.mensagemErro = err
+        )
     }
-
   }
 
   /* private ultimaExposicao(exposicao){

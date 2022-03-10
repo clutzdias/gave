@@ -30,8 +30,8 @@ class ExposicoesService {
         return $validator;
     }
 
-    private function getExposicaoPorEdital($id_edital){
-
+    public function getExposicaoPorEdital($id_edital){
+        
         $query = DB::table('exposicoes')
                     ->select('exposicoes.id')
                     ->where('exposicoes.edital', '=', $id_edital);
@@ -47,7 +47,7 @@ class ExposicoesService {
         if (count($exposicao) > 0){
             return [
                 'success' => 0,
-                'message' => 'J� existe uma exposi��o cadastrada para este edital'
+                'message' => 'Ja existe uma exposicao cadastrada para este edital'
             ];
         } else {
 

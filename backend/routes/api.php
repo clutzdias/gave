@@ -26,6 +26,7 @@ Route::group(array('prefix' => 'v1'), function()
   Route::post('{id_edital}/exposicoes/criar', 'App\Http\Controllers\ExposicoesController@criarExposicao')->name('exposicoes.criarExposicao');
   Route::get('/exposicoes/{id_exposicao}', 'App\Http\Controllers\ExposicoesController@showExposicao')->name('exposicoes.showExposicao');
   Route::patch('/exposicoes/{id_exposicao}', 'App\Http\Controllers\ExposicoesController@alterarExposicao')->name('exposicoes.alterarExposicao');
+  Route::get('/exposicoes/edital/{id_edital}', 'App\Http\Controllers\ExposicoesController@getExposicaoPorEdital')->name('exposicoes.getExposicaoPorEdital');
   Route::get('{id_edital}/trabalhos', 'App\Http\Controllers\TrabalhosController@listarTrabalhos')->name('trabalhos.listarTrabalhos');
   Route::get('{id_edital}/trabalhos/{id_usuario}', 'App\Http\Controllers\TrabalhosController@trabalhosPorUsuario')->name('trabalhos.trabalhosPorUsuario');
   Route::post('/trabalhos/criar', 'App\Http\Controllers\TrabalhosController@criarTrabalho')->name('trabalhos.criarTrabalho');

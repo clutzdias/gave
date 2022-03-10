@@ -8,6 +8,7 @@ import { LocalStorageService } from './local-storage.service';
 
 const CRIAR_EXPOSICAO_ENDPOINT = 'exposicoes/criar'
 const EXPOSICOES_ENDPOINT = 'exposicoes'
+const EXPOSICAO_POR_EDITAL_ENDPOINT = 'exposicoes/edital'
 
 
 @Injectable({
@@ -58,6 +59,10 @@ export class ExposicoesService {
                  "data_fim": form.value.data_fim,
                  "trabalhos": form.value.trabalhos_selecionados}
     return this.http.patch(BASE_API_URL + EXPOSICOES_ENDPOINT + '/' + id_exposicao, dados);
+  }
+
+  public getExposicaoPorEdital(id_edital: string): Observable<any>{
+    return this.http.get(BASE_API_URL + EXPOSICAO_POR_EDITAL_ENDPOINT + '/' + id_edital);
   }
 
 
